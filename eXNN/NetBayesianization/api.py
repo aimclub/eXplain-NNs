@@ -1,4 +1,5 @@
 import torch
+from .wrap import create_bayesian_wrapper
 
 def BasicBayesianPrediction(data: torch.Tensor, 
                             model: torch.nn.Module,
@@ -7,29 +8,24 @@ def BasicBayesianPrediction(data: torch.Tensor,
                             p: float,
                             a: float,
                             b: float):
-    raise NotImplementedError()
+    return BasicBayesianWrapper(model, mode, p, a, b).predict(data, n_iter)
 
-class BasisBayesianWrapper:
+class BasicBayesianWrapper:
     def __init__(self,
                  model: torch.nn.Module,
                  mode: str,
                  p: float,
                  a: float,
                  b: float):
-        self.model = model
-        self.mode = mode
-        self.p = p
-        self.a = a
-        self.b = b
+        self.model = create_bayesian_wrapper(model, mode, p, a, b)
 
     def predict(self, data, n_iter):
-        return BasicBayesianPrediction(data,
-                                       self.model,
-                                       n_iter,
-                                       self.mode,
-                                       self.p,
-                                       self.a,
-                                       self.b)
-
-def create_bayesian_wrapper(model: torch.nn.Module) -> torch.nn.Module:
-    raise NotImplementedError()
+        all_probs = []
+        with torch.no_grad():
+            for i in range(n_iter):
+                prob = self.model(data).softmax(dim=1)
+                all_probs.append(prob)
+        all_probs = torch.stack(all_probs, dim=0)
+        all_preds = all_probs.argmax(dim=-1)
+        mean_preds = all_preds.mode(dim=0)[0]
+        return mean_preds
