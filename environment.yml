@@ -90,8 +90,9 @@ dependencies:
   - numpy=1.19.2=py38h54aff64_0
   - numpy-base=1.19.2=py38hfa32c7d_0
   - openh264=2.1.1=h4ff587b_0
-  - openssl=1.1.1q=h7f8727e_0
+  - openssl=1.1.1o=h166bdaf_0
   - packaging=21.3=pyhd3eb1b0_0
+  - pandas=1.4.1=py38h43a58ef_0
   - pandocfilters=1.5.0=pyhd3eb1b0_0
   - parso=0.8.3=pyhd3eb1b0_0
   - pexpect=4.8.0=pyhd3eb1b0_3
@@ -99,6 +100,7 @@ dependencies:
   - pillow=9.2.0=py38hace64e9_1
   - pip=22.2.2=py38h06a4308_0
   - pkgutil-resolve-name=1.3.10=py38h06a4308_0
+  - plotly=4.8.2=pyh9f0ad1d_0
   - prometheus_client=0.14.1=py38h06a4308_0
   - prompt-toolkit=3.0.20=pyhd3eb1b0_0
   - psutil=5.9.0=py38h5eee18b_0
@@ -116,9 +118,11 @@ dependencies:
   - python_abi=3.8=2_cp38
   - pytorch=1.11.0=py3.8_cuda10.2_cudnn7.6.5_0
   - pytorch-mutex=1.0=cuda
+  - pytz=2022.4=pyhd8ed1ab_0
   - pyzmq=23.2.0=py38h6a678d5_0
   - readline=8.1.2=h7f8727e_1
   - requests=2.28.1=py38h06a4308_0
+  - retrying=1.3.3=py_2
   - scikit-learn=1.0.2=py38h1561384_0
   - scipy=1.8.0=py38h56a6a73_1
   - send2trash=1.8.0=pyhd3eb1b0_1
