@@ -11,7 +11,7 @@ def _plot(embedding):
 
 def ReduceDim(data: torch.Tensor,
               mode: str):
-    data = data.detach().cpu().numpy()
+    data = data.detach().cpu().numpy().reshape((len(data), -1))
     if mode == 'pca':
         return PCA(n_components=2).fit_transform(data)
     elif mode == 'umap':
