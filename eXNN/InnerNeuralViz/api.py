@@ -1,5 +1,5 @@
 import torch
-from typing import List
+from typing import List, Optional
 from sklearn.decomposition import PCA
 import umap
 import plotly.express as px
@@ -20,9 +20,11 @@ def ReduceDim(data: torch.Tensor,
         raise ValueError(f'Unsupported mode: `{mode}`')
 
 def VisualizeNetSpace(model: torch.nn.Module,
+                      mode: str,
                       data: torch.Tensor,
-                      layers: List[str],
-                      mode: str):
+                      layers: Optional[List[str]]=None):
+    if layers is None:
+        layers = [_[0] for _ in model.named_children()]
     hooks = {layer: get_hook(model, layer) for layer in layers}
     with torch.no_grad():
         out = model(data)
@@ -30,3 +32,7 @@ def VisualizeNetSpace(model: torch.nn.Module,
     for layer in layers:
         visualizations[layer] = _plot(ReduceDim(hooks[layer].fwd, mode))
     return visualizations
+
+def get_random_input(dims: List[int]):
+    """Generates random data of dims=`dims` drawn from uniform distribution"""
+    return torch.rand(size=dims)
