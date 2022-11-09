@@ -58,8 +58,8 @@ class NetworkBayesWrapperBeta(nn.Module):
         results = []
         out = {}
         m = Beta(torch.tensor(self.alpha), torch.tensor(self.beta))
-        p = m.sample()
         for i in range(n_iter):
+            p = m.sample()
             model_copy = copy.deepcopy(self.model)
             state_dict = model_copy.state_dict()
             state_dict_v2 = copy.deepcopy(state_dict)
