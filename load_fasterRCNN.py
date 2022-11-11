@@ -8,7 +8,7 @@ import copy
 
 def load_baseline(model_fldr:Path=None):
     device = torch.device('cpu')
-    if path is None: path = Path('.')
+    if model_fldr is None: model_fldr = Path('.')
     model_name = "ResNet50.sd.pt"
     model = fasterrcnn_resnet50_fpn()
     in_features = model.roi_heads.box_predictor.cls_score.in_features
@@ -17,6 +17,8 @@ def load_baseline(model_fldr:Path=None):
     return model
 
 def load_improved(model_fldr:Path=None):
+    device = torch.device('cpu')
+    if model_fldr is None: model_fldr = Path('.')
     svd_model_name = "ResNet50_SVD_channel_O-10.0_H-0.001000.sd.pt"
     svd_model = fasterrcnn_resnet50_fpn()
     in_features = svd_model.roi_heads.box_predictor.cls_score.in_features
