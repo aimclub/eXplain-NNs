@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim
-from wrap import create_bayesian_wrapper
+from eXNN.NetBayesianization.wrap import create_bayesian_wrapper
 
 
 def BasicBayesianPrediction(data: torch.Tensor, 
