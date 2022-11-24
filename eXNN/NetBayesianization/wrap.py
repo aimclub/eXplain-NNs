@@ -31,6 +31,7 @@ class NetworkBayes(nn.Module):
             model_copy.load_state_dict(state_dict_v2, strict=True)
             output = model_copy(data)
             results.append(output)
+
         results = torch.stack(results, dim = 1)
         results = torch.stack([
             torch.mean(results, dim = 1),
@@ -56,7 +57,7 @@ class NetworkBayesBeta(nn.Module):
                      data: torch.Tensor, 
                      n_iter: int):
         
-        pred_list = []
+        results = []
         m = Beta(torch.tensor(self.alpha), torch.tensor(self.beta))
         for i in range(n_iter):
             p = m.sample()
@@ -69,7 +70,7 @@ class NetworkBayesBeta(nn.Module):
                     state_dict_v2[key] = output
             model_copy.load_state_dict(state_dict_v2, strict=True)
             output = model_copy(data)
-            pred_list.append(output)
+            results.append(output)
         results = torch.stack(results, dim = 1)
         results = torch.stack([
             torch.mean(results, dim = 1),
@@ -88,6 +89,6 @@ def create_bayesian_wrapper(model: torch.nn.Module,
         net = NetworkBayes(model, p)
     
     elif mode == 'beta':
-        net = NetworkBayesBeta(model, a, b).mean_forward
+        net = NetworkBayesBeta(model, a, b)
         
     return net
