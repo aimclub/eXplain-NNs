@@ -1,3 +1,4 @@
+import math
 import torch
 from typing import List, Optional
 from sklearn.decomposition import PCA
@@ -26,18 +27,34 @@ def VisualizeNetSpace(model: torch.nn.Module,
                       mode: str,
                       data: torch.Tensor,
                       layers: Optional[List[str]]=None,
-                      labels: Optional[torch.Tensor]=None):
+                      labels: Optional[torch.Tensor]=None,
+                      chunk_size: Optional[int]=None):
     if layers is None:
         layers = [_[0] for _ in model.named_children()]
     if labels is not None:
         labels = list(map(str, labels.detach().cpu().numpy().tolist()))
     hooks = {layer: get_hook(model, layer) for layer in layers}
-    with torch.no_grad():
-        out = model(data)
-    visualizations = {'input': _plot(ReduceDim(data, mode), labels)}
-    for layer in layers:
-        visualizations[layer] = _plot(ReduceDim(hooks[layer].fwd, mode), labels)
-    return visualizations
+    if chunk_size is None:
+        with torch.no_grad():
+            out = model(data)
+        visualizations = {'input': _plot(ReduceDim(data, mode), labels)}
+        for layer in layers:
+            visualizations[layer] = _plot(ReduceDim(hooks[layer].fwd, mode), labels)
+        return visualizations
+    else:
+        representations = {layer: [] for layer in layers}
+        for i in range(math.ceil(len(data) / chunk_size)):
+            with torch.no_grad():
+                out = model(data[i*chunk_size:(i+1)*chunk_size])
+            for layer in layers:
+                representations[layer].append(hooks[layer].fwd.detach().cpu())
+        visualizations = {'input': _plot(ReduceDim(data, mode), labels)}
+        for layer in layers:
+            layer_reprs = torch.cat(representations[layer], dim=0)
+            visualizations[layer] = _plot(ReduceDim(layer_reprs, mode), labels)
+        return visualizations
+            
+
 
 def get_random_input(dims: List[int]):
     """Generates random data of dims=`dims` drawn from uniform distribution"""
