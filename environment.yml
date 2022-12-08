@@ -16,8 +16,8 @@ dependencies:
   - bleach=4.1.0=pyhd3eb1b0_0
   - brotlipy=0.7.0=py38h27cfd23_1003
   - bzip2=1.0.8=h7b6447c_0
-  - ca-certificates=2022.9.24=ha878542_0
-  - certifi=2022.9.24=pyhd8ed1ab_0
+  - ca-certificates=2022.12.7=ha878542_0
+  - certifi=2022.12.7=pyhd8ed1ab_0
   - cffi=1.15.1=py38h74dc2b5_0
   - charset-normalizer=2.0.4=pyhd3eb1b0_0
   - cryptography=37.0.1=py38h9ce1e76_0
@@ -140,6 +140,7 @@ dependencies:
   - testpath=0.6.0=py38h06a4308_0
   - threadpoolctl=3.1.0=pyh8a188c0_0
   - tk=8.6.12=h1ccaba5_0
+  - torchmetrics=0.11.0=pyhd8ed1ab_0
   - torchvision=0.12.0=py38_cu102
   - tornado=6.2=py38h5eee18b_0
   - tqdm=4.64.1=py38h06a4308_0
