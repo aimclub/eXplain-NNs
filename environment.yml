@@ -213,6 +213,11 @@ dependencies:
     - giotto-ph==0.2.2
     - giotto-tda==0.6.0
     - igraph==0.10.2
+    - iniconfig==1.1.1
+    - pluggy==1.0.0
+    - py==1.11.0
     - pyflagser==0.4.5
+    - pytest==7.1.2
     - texttable==1.6.7
+    - tomli==2.0.1
 prefix: /mnt/tank/scratch/tpolevaya/miniconda3/envs/eXNN
