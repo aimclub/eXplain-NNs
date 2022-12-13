@@ -1,5 +1,4 @@
 import torch
-import torch.nn as nn
 import torch.optim
 from eXNN.NetBayesianization.wrap import create_bayesian_wrapper
 
