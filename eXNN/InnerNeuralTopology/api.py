@@ -1,5 +1,5 @@
 import torch
-from typing import List, Dict
+from typing import List
 from eXNN.InnerNeuralTopology.homologies import InnerNetspaceHomologies, _ComputeBarcode
 
 def ComputeBarcode(data: torch.Tensor,
