@@ -1,12 +1,13 @@
 import torch
 import matplotlib.pyplot as plt
 from typing import List, Dict
-from gtda.homology import VietorisRipsPersistence, WeakAlphaPersistence, SparseRipsPersistence
+from gtda.homology import VietorisRipsPersistence, WeakAlphaPersistence,\
+    SparseRipsPersistence
 
 
 def GetActivation(model: torch.nn.Module,
-                   x: torch.Tensor,
-                   layer: str):
+                  x: torch.Tensor,
+                  layer: str):
     activation = {}
 
     def getActivation(name):
@@ -20,6 +21,7 @@ def GetActivation(model: torch.nn.Module,
     h1.remove()
     return activation[layer]
 
+
 def diagram_to_barcode(plot):
     data = plot['data']
     homologies = {}
@@ -31,6 +33,7 @@ def diagram_to_barcode(plot):
     for h in homologies.keys():
         homologies[h] = sorted(homologies[h], key=lambda x: x[0])
     return homologies
+
 
 def plot_barcode(barcode: Dict):
     homologies = list(barcode.keys())
@@ -57,15 +60,18 @@ def plot_barcode(barcode: Dict):
     plt.close(fig)
     return fig
 
+
 def _ComputeBarcode(data: torch.Tensor,
-                   hom_type: str,
-                   coefs_type: str):
+                    hom_type: str,
+                    coefs_type: str):
     if hom_type == "standard":
-        VR = VietorisRipsPersistence(homology_dimensions=[0], collapse_edges=True, coeff = int(coefs_type))
+        VR = VietorisRipsPersistence(
+            homology_dimensions=[0], collapse_edges=True, coeff=int(coefs_type))
     elif hom_type == "sparse":
         VR = SparseRipsPersistence(homology_dimensions=[0], coeff=int(coefs_type))
     elif hom_type == "weak":
-        VR = WeakAlphaPersistence(homology_dimensions=[0], collapse_edges=True, coeff=int(coefs_type))
+        VR = WeakAlphaPersistence(
+            homology_dimensions=[0], collapse_edges=True, coeff=int(coefs_type))
     else:
         assert False, "hom_type must be one of: \"standard\", \"sparse\", \"weak\"!"
 
@@ -77,6 +83,7 @@ def _ComputeBarcode(data: torch.Tensor,
     barcode = diagram_to_barcode(plot)
     return plot_barcode(barcode)
 
+
 def InnerNetspaceHomologies(model: torch.nn.Module,
                             x: torch.Tensor,
                             layer: str,
@@ -86,12 +93,13 @@ def InnerNetspaceHomologies(model: torch.nn.Module,
     plot = _ComputeBarcode(act, hom_type, coefs_type)
     return plot
 
+
 def InnerNetspaceHomologiesExperimental(model: torch.nn.Module,
-                          x: torch.Tensor,
-                          layer: str,
-                          dimensions: List[int] = [0],
-                          make_barplot: bool = True,
-                          rm_empty: bool = True):
+                                        x: torch.Tensor,
+                                        layer: str,
+                                        dimensions: List[int] = [0],
+                                        make_barplot: bool = True,
+                                        rm_empty: bool = True):
     act = GetActivation(model, x, layer)
     act = act.reshape(1, *act.shape)
     # Dimensions must not be outside layer dimensionality
@@ -100,7 +108,7 @@ def InnerNetspaceHomologiesExperimental(model: torch.nn.Module,
     dimensions = [i for i in dimensions if ((i >= 0) and (i < N))]
     dimensions = list(set(dimensions))
     VR = VietorisRipsPersistence(homology_dimensions=dimensions,
-                                 collapse_edges = True)
+                                 collapse_edges=True)
     diagrams = VR.fit_transform(act)
     plot = VR.plot(diagrams)
     if make_barplot:
