@@ -63,7 +63,7 @@ def _ComputeBarcode(data: torch.Tensor,
     if hom_type == "standard":
         VR = VietorisRipsPersistence(homology_dimensions=[0], collapse_edges=True, coeff = int(coefs_type))
     elif hom_type == "sparse":
-        VR = SparseRipsPersistence(homology_dimensions=[0], collapse_edges=True, coeff=int(coefs_type))
+        VR = SparseRipsPersistence(homology_dimensions=[0], coeff=int(coefs_type))
     elif hom_type == "weak":
         VR = WeakAlphaPersistence(homology_dimensions=[0], collapse_edges=True, coeff=int(coefs_type))
     else:
