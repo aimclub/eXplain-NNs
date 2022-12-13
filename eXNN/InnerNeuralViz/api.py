@@ -8,11 +8,12 @@ import umap
 import plotly.express as px
 from eXNN.InnerNeuralViz.hook import get_hook
 
+
 def _plot(embedding, labels):
     if labels is not None:
-        return px.scatter(x=embedding[:,0], y=embedding[:,1], color=labels)
+        return px.scatter(x=embedding[:, 0], y=embedding[:, 1], color=labels)
     else:
-        return px.scatter(x=embedding[:,0], y=embedding[:,1])
+        return px.scatter(x=embedding[:, 0], y=embedding[:, 1])
 
 
 def ReduceDim(data: torch.Tensor,
@@ -29,7 +30,7 @@ def ReduceDim(data: torch.Tensor,
     Returns:
         np.ndarray: data projected on a 2d space, of shape Nx2
     """
-    
+
     data = data.detach().cpu().numpy().reshape((len(data), -1))
     if mode == 'pca':
         return PCA(n_components=2).fit_transform(data)
@@ -38,12 +39,13 @@ def ReduceDim(data: torch.Tensor,
     else:
         raise ValueError(f'Unsupported mode: `{mode}`')
 
+
 def VisualizeNetSpace(model: torch.nn.Module,
                       mode: str,
                       data: torch.Tensor,
-                      layers: Optional[List[str]]=None,
-                      labels: Optional[torch.Tensor]=None,
-                      chunk_size: Optional[int]=None) -> Dict[str, plotly.graph_objs._figure.Figure]:
+                      layers: Optional[List[str]] = None,
+                      labels: Optional[torch.Tensor] = None,
+                      chunk_size: Optional[int] = None) -> Dict[str, plotly.graph_objs._figure.Figure]:
     """This function visulizes data latent representations on neural network layers.
 
     Args:
@@ -57,7 +59,7 @@ def VisualizeNetSpace(model: torch.nn.Module,
     Returns:
         Dict[str, plotly.graph_objs._figure.Figure]: dictionary with latent representations visualization for each layer
     """
-    
+
     if layers is None:
         layers = [_[0] for _ in model.named_children()]
     if labels is not None:
@@ -82,7 +84,6 @@ def VisualizeNetSpace(model: torch.nn.Module,
             layer_reprs = torch.cat(representations[layer], dim=0)
             visualizations[layer] = _plot(ReduceDim(layer_reprs, mode), labels)
         return visualizations
-            
 
 
 def get_random_input(dims: List[int]) -> torch.Tensor:

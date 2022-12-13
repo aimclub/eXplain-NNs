@@ -3,6 +3,7 @@ import torch
 from typing import Dict, List
 from eXNN.InnerNeuralTopology.homologies import InnerNetspaceHomologies, _ComputeBarcode
 
+
 def ComputeBarcode(data: torch.Tensor,
                    hom_type: str,
                    coefs_type: str) -> matplotlib.figure.Figure:
@@ -17,6 +18,7 @@ def ComputeBarcode(data: torch.Tensor,
         matplotlib.figure.Figure: barcode plot
     """
     return _ComputeBarcode(data, hom_type, coefs_type)
+
 
 def NetworkHomologies(model: torch.nn.Module,
                       data: torch.Tensor,
