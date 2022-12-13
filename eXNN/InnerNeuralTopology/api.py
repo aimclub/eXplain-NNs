@@ -10,7 +10,9 @@ def ComputeBarcode(data: torch.Tensor,
     """The function plots barcodes.
 
     Args:
-        data (torch.Tensor): input data of shape NxC1x...xCk, where N is the number of data points, C1,...,Ck are dimensions of each data point
+        data (torch.Tensor): input data of shape NxC1x...xCk,
+            where N is the number of data points,
+            C1,...,Ck are dimensions of each data point
         hom_type (str): homotopy type
         coefs_type (str): coefficients type
 
@@ -25,17 +27,16 @@ def NetworkHomologies(model: torch.nn.Module,
                       layers: List[str],
                       hom_type: str,
                       coefs_type: str) -> Dict[str, matplotlib.figure.Figure]:
-    """The function plots homology barcodes of latent representations on different levels of the neural network.
-
- model (torch.nn.Module): neural network
-        mode (str): dimensionality reduction mode (`umap` or `pca`)
-        data (torch.Tensor): 
-        layers (Optional[List[str]], optional): 
+    """The function plots homology barcodes of latent representations on different levels
+        of the neural network.
 
     Args:
         model (torch.nn.Module): neural network
-        data (torch.Tensor): input data of shape NxC1x...xCk, where N is the number of data points, C1,...,Ck are dimensions of each data point
-        layers (List[str]): list of layers for visualization. Defaults to None. If None, visualization for all layers is performed
+        data (torch.Tensor): input data of shape NxC1x...xCk,
+            where N is the number of data points,
+            C1,...,Ck are dimensions of each data point
+        layers (List[str]): list of layers for visualization. Defaults to None.
+            If None, visualization for all layers is performed
         hom_type (str): homotopy type
         coefs_type (str): coefficients type
 

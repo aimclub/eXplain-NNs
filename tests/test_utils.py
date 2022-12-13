@@ -8,7 +8,8 @@ def _form_message_header(message_header=None):
 
 
 def compare_values(expected, got, message_header=None):
-    assert expected == got, f"{_form_message_header(message_header)}: expected {expected}, got {got}"
+    assert expected == got, \
+        f"{_form_message_header(message_header)}: expected {expected}, got {got}"
 
 
 def create_testing_data():

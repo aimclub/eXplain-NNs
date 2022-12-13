@@ -21,7 +21,9 @@ def ReduceDim(data: torch.Tensor,
     """This function reduces data dimensionality to 2 dimensions.
 
     Args:
-        data (torch.Tensor): input data of shape NxC1x...xCk, where N is the number of data points, C1,...,Ck are dimensions of each data point
+        data (torch.Tensor): input data of shape NxC1x...xCk,
+            where N is the number of data points,
+            C1,...,Ck are dimensions of each data point
         mode (str): dimensionality reduction mode (`umap` or `pca`)
 
     Raises:
@@ -45,19 +47,26 @@ def VisualizeNetSpace(model: torch.nn.Module,
                       data: torch.Tensor,
                       layers: Optional[List[str]] = None,
                       labels: Optional[torch.Tensor] = None,
-                      chunk_size: Optional[int] = None) -> Dict[str, plotly.graph_objs._figure.Figure]:
+                      chunk_size: Optional[int] = None)\
+        -> Dict[str, plotly.graph_objs._figure.Figure]:
     """This function visulizes data latent representations on neural network layers.
 
     Args:
         model (torch.nn.Module): neural network
         mode (str): dimensionality reduction mode (`umap` or `pca`)
-        data (torch.Tensor): input data of shape NxC1x...xCk, where N is the number of data points, C1,...,Ck are dimensions of each data point
-        layers (Optional[List[str]], optional): list of layers for visualization. Defaults to None. If None, visualization for all layers is performed
-        labels (Optional[torch.Tensor], optional): data labels (colors). Defaults to None. If None, all points are visualized with the same color
-        chunk_size (Optional[int], optional): batch size for data processing. Defaults to None. If None, all data is processed in one batch
+        data (torch.Tensor): input data of shape NxC1x...xCk,
+            where N is the number of data points,
+            C1,...,Ck are dimensions of each data point
+        layers (Optional[List[str]], optional): list of layers for visualization.
+            Defaults to None. If None, visualization for all layers is performed
+        labels (Optional[torch.Tensor], optional): data labels (colors).
+            Defaults to None. If None, all points are visualized with the same color
+        chunk_size (Optional[int], optional): batch size for data processing.
+            Defaults to None. If None, all data is processed in one batch
 
     Returns:
-        Dict[str, plotly.graph_objs._figure.Figure]: dictionary with latent representations visualization for each layer
+        Dict[str, plotly.graph_objs._figure.Figure]: dictionary with latent
+            representations visualization for each layer
     """
 
     if layers is None:
@@ -76,7 +85,7 @@ def VisualizeNetSpace(model: torch.nn.Module,
         representations = {layer: [] for layer in layers}
         for i in range(math.ceil(len(data) / chunk_size)):
             with torch.no_grad():
-                out = model(data[i*chunk_size:(i+1)*chunk_size])
+                out = model(data[i * chunk_size:(i + 1) * chunk_size])
             for layer in layers:
                 representations[layer].append(hooks[layer].fwd.detach().cpu())
         visualizations = {'input': _plot(ReduceDim(data, mode), labels)}

@@ -1,7 +1,8 @@
 import torch
 import matplotlib.pyplot as plt
 from typing import List, Dict
-from gtda.homology import VietorisRipsPersistence, WeakAlphaPersistence, SparseRipsPersistence
+from gtda.homology import VietorisRipsPersistence, WeakAlphaPersistence,\
+    SparseRipsPersistence
 
 
 def GetActivation(model: torch.nn.Module,
