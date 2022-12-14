@@ -37,3 +37,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest tests/tests.py
+    - name: Check code style PEP8
+      run: |
+        pycodestyle --max-line-length=90 --ignore=E266 eXNN
+        pycodestyle --max-line-length=90 --ignore=E266 tests

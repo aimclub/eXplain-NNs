@@ -16,6 +16,7 @@ def _plot(embedding, labels):
     plt.close()
     return fig
 
+
 def ReduceDim(data: torch.Tensor,
               mode: str) -> np.ndarray:
     """This function reduces data dimensionality to 2 dimensions.
