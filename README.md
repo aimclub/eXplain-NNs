@@ -68,6 +68,11 @@ Requirements: Python 3.8
     $ pycodestyle --max-line-length=90 --ignore=E266 eXNN
     $ pycodestyle --max-line-length=90 --ignore=E266 tests
     ```
+1. build a PyPi package locally
+    ```
+    $ python3 -m pip install --upgrade build
+    $ python3 -m build
+    ```
 
 ## Documentation
 TBD
