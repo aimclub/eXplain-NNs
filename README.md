@@ -75,13 +75,19 @@ Requirements: Python 3.8
     ```
 
 ## Documentation
-TBD
+The general description is available [here](https://med-ai-lab.github.io/eXplain-NNs-documentation/).
+
+eXplain-NNs Library API is available [here](https://med-ai-lab.github.io/eXplain-NNs-documentation/api_docs/eXNN.html)
+
 
 ## Examples & Tutorials
-TBD
+We provide tutorials demonstrating suggested usage pipeline:
+* [Visualization](examples/Visualization.ipynb)
+* [Homologies](examples/Topology.ipynb)
+* [Bayesianization](examples/BNN.ipynb)
 
 ## Contribution Guide
-TBD
+The contribution guide is available in the [repository](./docs/contribution.md).
 
 ## Acknowledgments
 ### Affiliation
