@@ -1,5 +1,4 @@
 import matplotlib
-import plotly
 import numpy as np
 import torch
 from eXNN.InnerNeuralTopology import api as topology_api
@@ -41,7 +40,7 @@ def test_visualization():
     utils.compare_values(set(['input'] + layers),
                          set(res.keys()), 'Wrong dictionary keys')
     for key, plot in res.items():
-        utils.compare_values(plotly.graph_objs._figure.Figure,
+        utils.compare_values(matplotlib.figure.Figure,
                              type(plot), f'Wrong value type for key {key}')
 
 

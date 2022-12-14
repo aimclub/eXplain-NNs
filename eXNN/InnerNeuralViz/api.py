@@ -1,20 +1,20 @@
 import math
+import matplotlib
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import plotly
 from typing import Dict, List, Optional
 from sklearn.decomposition import PCA
 import umap
-import plotly.express as px
 from eXNN.InnerNeuralViz.hook import get_hook
 
 
 def _plot(embedding, labels):
-    if labels is not None:
-        return px.scatter(x=embedding[:, 0], y=embedding[:, 1], color=labels)
-    else:
-        return px.scatter(x=embedding[:, 0], y=embedding[:, 1])
-
+    fig, ax = plt.subplots()
+    ax.scatter(x=embedding[:, 0], y=embedding[:, 1], c=labels)
+    ax.axis('Off')
+    plt.close()
+    return fig
 
 def ReduceDim(data: torch.Tensor,
               mode: str) -> np.ndarray:
@@ -48,7 +48,7 @@ def VisualizeNetSpace(model: torch.nn.Module,
                       layers: Optional[List[str]] = None,
                       labels: Optional[torch.Tensor] = None,
                       chunk_size: Optional[int] = None)\
-        -> Dict[str, plotly.graph_objs._figure.Figure]:
+        -> Dict[str, matplotlib.figure.Figure]:
     """This function visulizes data latent representations on neural network layers.
 
     Args:
@@ -65,14 +65,14 @@ def VisualizeNetSpace(model: torch.nn.Module,
             Defaults to None. If None, all data is processed in one batch
 
     Returns:
-        Dict[str, plotly.graph_objs._figure.Figure]: dictionary with latent
+        Dict[str, matplotlib.figure.Figure]: dictionary with latent
             representations visualization for each layer
     """
 
     if layers is None:
         layers = [_[0] for _ in model.named_children()]
     if labels is not None:
-        labels = list(map(str, labels.detach().cpu().numpy().tolist()))
+        labels = labels.detach().cpu().numpy()
     hooks = {layer: get_hook(model, layer) for layer in layers}
     if chunk_size is None:
         with torch.no_grad():
