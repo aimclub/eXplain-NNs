@@ -1,9 +1,9 @@
 import matplotlib
 import numpy as np
 import torch
-from eXNN.InnerNeuralTopology import api as topology_api
-from eXNN.InnerNeuralViz import api as viz_api
-from eXNN.NetBayesianization import api as bayes_api
+import eXNN.InnerNeuralTopology as topology_api
+import eXNN.InnerNeuralViz as viz_api
+import eXNN.NetBayesianization as bayes_api
 import tests.test_utils as utils
 
 
