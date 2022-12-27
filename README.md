@@ -86,6 +86,10 @@ We provide tutorials demonstrating suggested usage pipeline:
 * [Homologies](examples/Topology.ipynb)
 * [Bayesianization](examples/BNN.ipynb)
 
+We also provide examples of application of our library to different tasks:
+* [CIFAR10 classification](examples/CIFAR)
+* [casting defect detection](examples/industrial)
+
 ## Contribution Guide
 The contribution guide is available in the [repository](./docs/contribution.md).
 
