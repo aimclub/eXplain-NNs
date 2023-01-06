@@ -7,7 +7,7 @@ from eXNN.InnerNeuralTopology.homologies import InnerNetspaceHomologies, _Comput
 def ComputeBarcode(data: torch.Tensor,
                    hom_type: str,
                    coefs_type: str) -> matplotlib.figure.Figure:
-    """The function plots barcodes.
+    """This function plots persistent homologies for a cloud of points as barcodes.
 
     Args:
         data (torch.Tensor): input data of shape NxC1x...xCk,
@@ -27,8 +27,9 @@ def NetworkHomologies(model: torch.nn.Module,
                       layers: List[str],
                       hom_type: str,
                       coefs_type: str) -> Dict[str, matplotlib.figure.Figure]:
-    """The function plots homology barcodes of latent representations on different levels
-        of the neural network.
+    """
+    The function plots persistent homologies for latent representations on different levels
+        of the neural network as barcodes.
 
     Args:
         model (torch.nn.Module): neural network
