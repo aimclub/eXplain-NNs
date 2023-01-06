@@ -53,6 +53,7 @@ def plot_barcode(barcode: Dict):
             bar = bars[j]
             ax[i].plot([bar[0], bar[1]], [j / n, j / n], color='black')
         labels = ["" for _ in range(len(ax[i].get_yticklabels()))]
+        ax[i].set_yticks(ax[i].get_yticks())
         ax[i].set_yticklabels(labels)
 
     if nplots == 1:
