@@ -82,13 +82,13 @@ eXplain-NNs Library API is available [here](https://med-ai-lab.github.io/eXplain
 
 ## Examples & Tutorials
 We provide tutorials demonstrating suggested usage pipeline:
-* [Visualization](/examples/Visualization.ipynb)
-* [Homologies](/examples/Topology.ipynb)
-* [Bayesianization](/examples/BNN.ipynb)
+* [Visualization](/examples/minimal/Visualization.ipynb)
+* [Homologies](/examples/minimal/Homologies.ipynb)
+* [Bayesianization](/examples/minimal/Bayesianization.ipynb)
 
 We also provide examples of application of our library to different tasks:
-* [CIFAR10 classification](/examples/CIFAR)
-* [casting defect detection](/examples/industrial)
+* [CIFAR10 classification](/examples/CIFAR10)
+* [casting defect detection](/examples/casting)
 
 ## Contribution Guide
 The contribution guide is available in the [repository](/docs/contribution.md).

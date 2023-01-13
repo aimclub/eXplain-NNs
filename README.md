@@ -82,13 +82,13 @@
 
 ## Примеры и тьюториалы
 Примеры использования API библиотеки:
-* [Визуализация](/examples/Visualization.ipynb)
-* [Гомологии](/examples/Topology.ipynb)
-* [Байесианизация](/examples/BNN.ipynb)
+* [Визуализация](/examples/minimal/Visualization.ipynb)
+* [Гомологии](/examples/minimal/Homologies.ipynb)
+* [Байесианизация](/examples/minimal/Bayesianization.ipynb)
 
 Примеры использования библиотеки для индустриальных задач:
-* [CIFAR10 classification](/examples/CIFAR)
-* [casting defect detection](/examples/industrial)
+* [CIFAR10 classification](/examples/CIFAR10)
+* [casting defect detection](/examples/casting)
 
 ## Как помочь проекту
 [Инструкции](/docs/contribution.md).
