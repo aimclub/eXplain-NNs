@@ -28,8 +28,8 @@ def NetworkHomologies(model: torch.nn.Module,
                       hom_type: str,
                       coefs_type: str) -> Dict[str, matplotlib.figure.Figure]:
     """
-    The function plots persistent homologies for latent representations on different levels
-        of the neural network as barcodes.
+    The function plots persistent homologies for latent representations
+        on different levels of the neural network as barcodes.
 
     Args:
         model (torch.nn.Module): neural network
