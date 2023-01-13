@@ -12,3 +12,12 @@ Visualization is performed on the data, provided by the user. The method takes r
 ## Homologies
 
 ## Uncertainty Estimation via Bayesianization
+One of the advantages of Bayesian neural networks (BNNs) [1] over classic ones (NNs) is their ability to evaluate uncertainty of their prediction. Our library takes advantage of this property of Bayesian neural networks. We provide a collection of methods that allows to build a Bayesian version of the trained neural network (to perform _bayesianisation_) and use the Bayesian model to evaluate uncertainty of the model.
+
+How a neurla network can be bayesianized? Let's say, original model has weights $W_i$. Basic BNN can be builed by replacing those weights with distributions $\hat{W}_i \sim W_i \cdot diag(z_1,...,z_n)$, where $z_j \sim Bernoulli(p)$. We also provide more advanced, beta-distribution bayesianization, where we take $p \sim B(\alpha, \beta)$, where $B(\alpha, \beta)$ is beta-distribution with parameters $\alpha, \beta$.
+
+For computational tractability we use Monte-Carlo sampling [2].
+
+[1] Jospin, Laurent & Buntine, Wray & Boussaid, Farid & Laga, Hamid & Bennamoun, Mohammed. (2020). Hands-on Bayesian Neural Networks -- a Tutorial for Deep Learning Users. 
+
+[2] https://en.wikipedia.org/wiki/Monte_Carlo_method
