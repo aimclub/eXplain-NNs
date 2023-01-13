@@ -1,4 +1,4 @@
-![logo](docs/logo.png)
+![logo](/docs/logo.png)
 
 # eXplain-NNs
 This repository contains eXplain-NNs Library - an open-source library with explainable AI (XAI) methods for analyzing neural networks. This library provides several XAI methods for latent spaces analysis and uncertainty estimation.
@@ -15,7 +15,7 @@ Thus compared to other XAI libraries, eXplain-NNs Library:
 * Provides homology analysis of latent spaces
 * Impelemnts a novel method of uncertainty estimation via bayesianization
 
-Details of [implemented methods](docs/methods.md).
+Details of [implemented methods](/docs/methods.md).
 
 ### Data Requirement
 * The library supports only models that are:
@@ -29,7 +29,7 @@ Requirements: Python 3.8
     $ conda create -n eXNN python=3.8
     $ conda activate eXNN
     ```
-1. install requirements from [requirements.txt](requirements.txt)
+1. install requirements from [requirements.txt](/requirements.txt)
     ```
     $ pip install -r requirements.txt
     ```
@@ -82,20 +82,20 @@ eXplain-NNs Library API is available [here](https://med-ai-lab.github.io/eXplain
 
 ## Examples & Tutorials
 We provide tutorials demonstrating suggested usage pipeline:
-* [Visualization](examples/Visualization.ipynb)
-* [Homologies](examples/Topology.ipynb)
-* [Bayesianization](examples/BNN.ipynb)
+* [Visualization](/examples/Visualization.ipynb)
+* [Homologies](/examples/Topology.ipynb)
+* [Bayesianization](/examples/BNN.ipynb)
 
 We also provide examples of application of our library to different tasks:
-* [CIFAR10 classification](examples/CIFAR)
-* [casting defect detection](examples/industrial)
+* [CIFAR10 classification](/examples/CIFAR)
+* [casting defect detection](/examples/industrial)
 
 ## Contribution Guide
-The contribution guide is available in the [repository](./docs/contribution.md).
+The contribution guide is available in the [repository](/docs/contribution.md).
 
 ## Acknowledgments
 ### Affiliation
-![itmo_logo](docs/itmo_logo_small.png)
+![itmo_logo](/docs/itmo_logo_small.png)
 
 The library was developed in [ITMO University](https://en.itmo.ru/).
 

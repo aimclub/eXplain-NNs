@@ -1,4 +1,4 @@
-![logo](docs/logo.png)
+![logo](/docs/logo.png)
 
 # eXplain-NNs
 Этот репозиторий содержит библиотеку eXplain-NNs — библиотеку с открытым исходным кодом с методами объяснимого ИИ (XAI) для анализа нейронных сетей. Эта библиотека предоставляет несколько методов XAI для анализа латентных пространств и оценки неопределенности.
@@ -15,7 +15,7 @@
 * Обеспечивает анализ гомологий латентных пространств
 * Внедряет новый метод оценки неопределенности с помощью байесианизации XAI для анализа латентных пространств и оценки неопределенности.
 
-Детали [реализации методов](docs/methods.md).
+Детали [реализации методов](/docs/methods.md).
 
 ### Data Requirement
 * The library supports only models that are:
@@ -29,7 +29,7 @@
     $ conda create -n eXNN python=3.8
     $ conda activate eXNN
     ```
-1. установите зависимости из [requirements.txt](requirements.txt)
+1. установите зависимости из [requirements.txt](/requirements.txt)
     ```
     $ pip install -r requirements.txt
     ```
@@ -82,20 +82,20 @@
 
 ## Примеры и тьюториалы
 Примеры использования API библиотеки:
-* [Визуализация](examples/Visualization.ipynb)
-* [Гомологии](examples/Topology.ipynb)
-* [Байесианизация](examples/BNN.ipynb)
+* [Визуализация](/examples/Visualization.ipynb)
+* [Гомологии](/examples/Topology.ipynb)
+* [Байесианизация](/examples/BNN.ipynb)
 
 Примеры использования библиотеки для индустриальных задач:
-* [CIFAR10 classification](examples/CIFAR)
-* [casting defect detection](examples/industrial)
+* [CIFAR10 classification](/examples/CIFAR)
+* [casting defect detection](/examples/industrial)
 
 ## Как помочь проекту
-[Инструкции](./docs/contribution.md).
+[Инструкции](/docs/contribution.md).
 
 ## Организационное
 ### Аффилиация
-![itmo_logo](docs/itmo_logo_small.png)
+![itmo_logo](/docs/itmo_logo_small.png)
 
 Библиотка разработана [Университетом ИТМО](https://itmo.ru/).
 
