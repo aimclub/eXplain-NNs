@@ -12,5 +12,5 @@ Requirements: Python 3.8
     ```
 1. install the library as a package
     ```
-    $ python -m pip install git+ssh://git@github.com/Med-AI-Lab/eXplain-NNs
+    $ python -m pip install git+ssh://git@github.com/aimclub/eXplain-NNs
     ```
