@@ -1,0 +1,16 @@
+title: "eXplain-NNs Library"
+theme: jekyll-theme-modernist
+markdown: kramdown
+description: > # this means to ignore newlines until "baseurl:"
+  <div class='menu-group'>
+    <div class='main-menu-item'><a href="index">About the library</a></div>
+    <div class='menu-item'><a href="project_structure">Project structure</a></div>
+    <div class='menu-item'><a href="methods">Implemented methods</a></div>
+    <div class='menu-item'><a href="api_docs/index.html">API</a></div>
+    <div class='menu-item'><a href="install">How to install</a></div>
+    <div class='menu-item'><a href="how-to-use">How to use</a></div>
+    <div class='menu-item'><a href="how-to-contribute">How to contribute</a></div>
+    <div class='menu-item'><a href="how-to-cite">How to cite</a></div>
+    <div class='menu-item'><a href="contact">Contact us</a></div>
+  </div>
+show_excerpts: true # set to false to remove excerpts on the homepage
