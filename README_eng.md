@@ -95,9 +95,9 @@ The contribution guide is available in the [repository](/docs/contribution.md).
 
 ## Acknowledgments
 ### Affiliation
-![itmo_logo](/docs/itmo_logo_small.png)
+![AGI](/docs/AIM-Strong_Sign_Norm-01_Colors.svg)
 
-The library was developed in [ITMO University](https://en.itmo.ru/).
+The study is supported by the Research Center Strong Artificial Intelligence in Industry of ITMO University.
 
 ### Developers
 * A. Vatyan - team leader
