@@ -103,10 +103,13 @@ We also provide examples of application of our library to different tasks:
 The contribution guide is available in the [repository](/docs/contribution.md).
 
 ## Acknowledgments
-### Affiliation
-![AGI](/docs/AIM-Strong_Sign_Norm-01_Colors.svg)
 
-The study is supported by the Research Center Strong Artificial Intelligence in Industry of ITMO University.
+### Affiliation
+[ITMO University](https://en.itmo.ru/).
+
+### Supported by
+The study is supported by the [Research Center Strong Artificial Intelligence in Industry](<https://sai.itmo.ru/>) 
+of [ITMO University](https://en.itmo.ru/) as part of the plan of the center's program: Development and testing of an experimental prototype of a library of strong AI algorithms in terms of algorithms for explaining the results of modeling on data using the semantics and terminology of the subject and problem areas in tasks with high uncertainty, including estimation of the uncertainty of neural network models predictions, analysis and visualization of interlayer transformations of the input variety inside neural networks.
 
 ### Developers
 * A. Vatyan - team leader
