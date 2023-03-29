@@ -1,5 +1,6 @@
-![logo](/docs/logo.png)
-
+<p align="center">
+    <img src="/docs/logo.png" width="500">
+</p>
 
 [![SAI](https://github.com/ITMO-NSS-team/open-source-ops/blob/master/badges/SAI_badge_flat.svg)](https://sai.itmo.ru/)
 [![ITMO](https://github.com/ITMO-NSS-team/open-source-ops/blob/master/badges/ITMO_badge_flat_rus.svg)](https://en.itmo.ru/en/)
