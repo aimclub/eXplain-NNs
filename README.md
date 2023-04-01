@@ -1,4 +1,14 @@
-![logo](/docs/logo.png)
+<p align="center">
+    <img src="/docs/logo.png" width="500">
+</p>
+
+[![SAI](https://github.com/ITMO-NSS-team/open-source-ops/blob/master/badges/SAI_badge_flat.svg)](https://sai.itmo.ru/)
+[![ITMO](https://github.com/ITMO-NSS-team/open-source-ops/blob/master/badges/ITMO_badge_flat_rus.svg)](https://en.itmo.ru/en/)
+
+[![Documentation](https://github.com/aimclub/eXplain-NNs/actions/workflows/pages/pages-build-deployment/badge.svg)](https://med-ai-lab.github.io/eXplain-NNs-documentation/)
+[![license](https://img.shields.io/github/license/aimclub/eXplain-NNs)](https://github.com/aimclub/eXplain-NNs/blob/main/LICENSE)
+[![Eng](https://img.shields.io/badge/lang-en-red.svg)](/README_eng.md)
+[![Mirror](https://camo.githubusercontent.com/9bd7b8c5b418f1364e72110a83629772729b29e8f3393b6c86bff237a6b784f6/68747470733a2f2f62616467656e2e6e65742f62616467652f6769746c61622f6d6972726f722f6f72616e67653f69636f6e3d6769746c6162)](https://gitlab.actcognitive.org/itmo-sai-code/eXplain-NNs)
 
 # eXplain-NNs
 Этот репозиторий содержит библиотеку eXplain-NNs — библиотеку с открытым исходным кодом с методами объяснимого ИИ (XAI) для анализа нейронных сетей. Эта библиотека предоставляет несколько методов XAI для анализа латентных пространств и оценки неопределенности.
@@ -94,10 +104,12 @@
 [Инструкции](/docs/contribution.md).
 
 ## Организационное
-### Аффилиация
-![AGI](/docs/AIM-Strong_Sign_Norm-01_Colors.svg)
 
-Разработка поддерживается исследовательским центром «Сильный искусственный интеллект в промышленности» Университета ИТМО.
+### Аффилиация
+[Университет ИТМО](https://en.itmo.ru/).
+
+### Поддержка
+Исследование проводится при поддержке [Исследовательского центра сильного искусственного интеллекта в промышленности](<https://sai.itmo.ru/>) [Университета ИТМО](https://itmo.ru) в рамках мероприятия программы центра: Разработка и испытания экспериментального образца библиотеки алгоритмов сильного ИИ в части алгоритмов объяснения результатов моделирования на данных с использованием семантики и терминологии предметной и проблемной областей в задачах с высокой неопределенностью, включая оценку неопределенности предсказаний моделей нейронных сетей, а также анализ и визуализацию межслойных трансформаций входного многообразия внутри нейронных сетей.
 
 ### Разработчики
 * А. Ватьян - тим лид
