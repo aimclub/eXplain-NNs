@@ -36,11 +36,19 @@ def compute_normed_entropy(entropy, length_sum):
     
 # Compute births
 def compute_births(diag):
-    return np.array([x[1] for x in diag[0]])
+    return np.array([x[0] for x in diag[0]])
 
 # Comput deaths
 def compute_deaths(diag):
-    return np.array([x[0] for x in diag[0]])
+    return np.array([x[1] for x in diag[0]])
+
+def compute_birth(diag, dim):
+    temp = np.array([x[0] for x in diag[0] if x[2]==dim])   
+    return temp[0]
+
+def compute_death(diag, dim):
+    temp = np.array([x[1] for x in diag[0] if x[2]==dim])
+    return temp[-1]
 
 # Compute SNR
 def compute_snr(births, deaths):
