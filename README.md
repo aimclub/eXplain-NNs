@@ -66,17 +66,13 @@
     ```
     $ pytest tests/tests.py
     ```
-1. приведение стиля кода в соотвествие с PEP8 автоматически с помощью autopep8
+1. приведение стиля кода в соотвествие с PEP8 автоматически
     ```
-    $ pip install autopep8==1.6.0
-    $ autopep8 --max-line-length=90 -i -r eXNN
-    $ autopep8 --max-line-length=90 -i -r tests
+    $ make format
     ```
 1. проверка стиля кода на соотвествие с PEP8
     ```
-    $ pip install pycodestyle==2.8.0
-    $ pycodestyle --max-line-length=90 --ignore=E266 eXNN
-    $ pycodestyle --max-line-length=90 --ignore=E266 tests
+    $ make check
     ```
 1. создание PyPi пакета локально
     ```

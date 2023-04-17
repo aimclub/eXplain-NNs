@@ -66,17 +66,13 @@ Requirements: Python 3.8
     ```
     $ pytest tests/tests.py
     ```
-1. fix code style to match PEP8 automatically with autopep8
+1. fix code style to match PEP8 automatically
     ```
-    $ pip install autopep8==1.6.0
-    $ autopep8 --max-line-length=90 -i -r eXNN
-    $ autopep8 --max-line-length=90 -i -r tests
+    $ make format
     ```
 1. check that code style matches PEP8
     ```
-    $ pip install pycodestyle==2.8.0
-    $ pycodestyle --max-line-length=90 --ignore=E266 eXNN
-    $ pycodestyle --max-line-length=90 --ignore=E266 tests
+    $ make check
     ```
 1. build a PyPi package locally
     ```
