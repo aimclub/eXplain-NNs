@@ -5,6 +5,5 @@ format:
 
 check:
 	brunette ./**/*.py --check
-	isort . --check
 	flake8 .
 	
