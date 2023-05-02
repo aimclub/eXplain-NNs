@@ -1,8 +1,9 @@
 import os
-from PIL import Image
+
 import numpy as np
-from torch.utils.data import Dataset
 import torchvision.transforms as TF
+from PIL import Image
+from torch.utils.data import Dataset
 
 
 class MyDs(Dataset):

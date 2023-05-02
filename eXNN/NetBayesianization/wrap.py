@@ -1,7 +1,8 @@
+import copy
 from typing import Optional
+
 import torch
 import torch.nn as nn
-import copy
 import torch.optim
 from torch.distributions import Beta
 

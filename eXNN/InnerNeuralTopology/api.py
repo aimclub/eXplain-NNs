@@ -1,6 +1,8 @@
+from typing import Dict, List
+
 import matplotlib
 import torch
-from typing import Dict, List
+
 from eXNN.InnerNeuralTopology.homologies import InnerNetspaceHomologies, _ComputeBarcode
 
 

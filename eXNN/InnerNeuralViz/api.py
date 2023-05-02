@@ -1,11 +1,13 @@
 import math
+from typing import Dict, List, Optional
+
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from typing import Dict, List, Optional
-from sklearn.decomposition import PCA
 import umap
+from sklearn.decomposition import PCA
+
 from eXNN.InnerNeuralViz.hook import get_hook
 
 

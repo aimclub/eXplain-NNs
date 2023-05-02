@@ -1,7 +1,8 @@
 from typing import Union
+
 import torch
 from torch import Tensor
-from torch.nn import Conv2d, Parameter, Module
+from torch.nn import Conv2d, Module, Parameter
 from torch.nn.common_types import _size_2_t
 
 
