@@ -113,6 +113,7 @@ class DecomposedConv2d(Conv2d):
         self.S = Parameter(s)
         self.Vh = Parameter(vh)
 
+
 def energy_threshold_pruning(conv: DecomposedConv2d, energy_threshold: float) -> None:
     """Prune the weight matrices to the energy_threshold (in-place)."""
     assert conv.decomposing, "for pruning, the model must be decomposed"
@@ -151,11 +152,13 @@ def decompose_module(model: Module, decomposing_mode: str = "channel") -> None:
             new_module.decompose(decomposing_mode=decomposing_mode)
             setattr(model, name, new_module)
 
+
 def prune_model(model, energy_threshold) -> None:
     """Prune the model weights to the energy_threshold."""
     for module in model.modules():
         if isinstance(module, DecomposedConv2d):
             energy_threshold_pruning(conv=module, energy_threshold=energy_threshold)
+
 
 def number_of_params(model) -> int:
     """Return number of model parameters."""
