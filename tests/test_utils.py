@@ -1,4 +1,5 @@
 from collections import OrderedDict
+
 import torch
 import torch.nn as nn
 
@@ -27,6 +28,6 @@ def create_testing_model():
                 ("first_layer", nn.Linear(256, 128)),
                 ("second_layer", nn.Linear(128, 64)),
                 ("third_layer", nn.Linear(64, 10)),
-            ]
+            ],
         ),
     )
