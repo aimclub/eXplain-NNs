@@ -62,8 +62,9 @@ class DecomposedConv2d(Conv2d):
         if decomposing_mode not in self.decomposing_modes_dict.keys():
             raise ValueError(
                 "decomposing_mode must be one of {}, but got decomposing_mode='{}'".format(
-                    self.decomposing_modes_dict.keys(), decomposing_mode
-                )
+                    self.decomposing_modes_dict.keys(),
+                    decomposing_mode,
+                ),
             )
         W = self.weight.view(self.decomposing_modes_dict[decomposing_mode])
         U, S, Vh = torch.linalg.svd(W, full_matrices=False)
@@ -80,8 +81,10 @@ class DecomposedConv2d(Conv2d):
         W = self.U @ torch.diag(self.S) @ self.Vh
         self.weight = Parameter(
             W.view(
-                self.out_channels, self.in_channels // self.groups, *self.kernel_size,
-            )
+                self.out_channels,
+                self.in_channels // self.groups,
+                *self.kernel_size,
+            ),
         )
 
         self.register_parameter("U", None)
