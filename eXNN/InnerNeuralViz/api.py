@@ -1,11 +1,13 @@
 import math
+from typing import Dict, List, Optional
+
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from typing import Dict, List, Optional
-from sklearn.decomposition import PCA
 import umap
+from sklearn.decomposition import PCA
+
 from eXNN.InnerNeuralViz.hook import get_hook
 
 
@@ -77,7 +79,7 @@ def VisualizeNetSpace(model: torch.nn.Module,
     hooks = {layer: get_hook(model, layer) for layer in layers}
     if chunk_size is None:
         with torch.no_grad():
-            out = model(data)
+            _ = model(data)
         visualizations = {'input': _plot(ReduceDim(data, mode), labels)}
         for layer in layers:
             visualizations[layer] = _plot(ReduceDim(hooks[layer].fwd, mode), labels)
@@ -86,7 +88,7 @@ def VisualizeNetSpace(model: torch.nn.Module,
         representations = {layer: [] for layer in layers}
         for i in range(math.ceil(len(data) / chunk_size)):
             with torch.no_grad():
-                out = model(data[i * chunk_size:(i + 1) * chunk_size])
+                _ = model(data[i * chunk_size:(i + 1) * chunk_size])
             for layer in layers:
                 representations[layer].append(hooks[layer].fwd.detach().cpu())
         visualizations = {'input': _plot(ReduceDim(data, mode), labels)}

@@ -1,8 +1,9 @@
 import os
-from PIL import Image
+
 import numpy as np
-from torch.utils.data import Dataset
 import torchvision.transforms as TF
+from PIL import Image
+from torch.utils.data import Dataset
 
 
 class MyDs(Dataset):
@@ -26,7 +27,8 @@ class MyDs(Dataset):
         if self.tfm is not None:
             image = self.tfm(image)
         return image, lbl
-    
+
+
 def create_datasets(data_path):
     pos_files = sorted(os.listdir(data_path / 'def_front'))
     neg_files = sorted(os.listdir(data_path / 'ok_front'))
@@ -38,7 +40,7 @@ def create_datasets(data_path):
     _N = int(len(neg_files) * 0.8)
     trn_neg_files, val_neg_files = neg_files[:_N], neg_files[_N:]
     _normalize = TF.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    tfm = TF.Compose([TF.Resize((256,256)), TF.ToTensor(), _normalize])
+    tfm = TF.Compose([TF.Resize((256, 256)), TF.ToTensor(), _normalize])
     trn_ds = MyDs(data_path, trn_pos_files, trn_neg_files, tfm=tfm)
     val_ds = MyDs(data_path, val_pos_files, val_neg_files, tfm=tfm)
     return trn_ds, val_ds
