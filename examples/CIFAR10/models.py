@@ -80,7 +80,7 @@ class DecomposedConv2d(Conv2d):
         W = self.U @ torch.diag(self.S) @ self.Vh
         self.weight = Parameter(
             W.view(
-                self.out_channels, self.in_channels // self.groups, *self.kernel_size
+                self.out_channels, self.in_channels // self.groups, *self.kernel_size,
             )
         )
 
@@ -98,14 +98,14 @@ class DecomposedConv2d(Conv2d):
                 W.view(
                     self.out_channels,
                     self.in_channels // self.groups,
-                    *self.kernel_size
+                    *self.kernel_size,
                 ),
                 self.bias,
             )
         else:
             return self._conv_forward(input, self.weight, self.bias)
 
-    def set_U_S_Vh(self, u: Tensor, s: Tensor, vh: Tensor) -> None:
+    def set_decomposition_matrices(self, u: Tensor, s: Tensor, vh: Tensor) -> None:
         """Update U, S, Vh matrices."""
 
         assert self.decomposing, "for setting U, S and Vh, the model must be decomposed"
@@ -125,7 +125,7 @@ def energy_threshold_pruning(conv: DecomposedConv2d, energy_threshold: float) ->
     for i, s in enumerate(S):
         summ -= s ** 2
         if summ < threshold:
-            conv.set_U_S_Vh(U[:, i:].clone(), S[i:].clone(), Vh[i:, :].clone())
+            conv.set_decomposition_matrices(U[:, i:].clone(), S[i:].clone(), Vh[i:, :].clone())
             break
 
 
