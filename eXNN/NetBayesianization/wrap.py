@@ -23,7 +23,7 @@ class NetworkBayes(nn.Module):
                      n_iter: int):
 
         results = []
-        for i in range(n_iter):
+        for _ in range(n_iter):
             model_copy = copy.deepcopy(self.model)
             state_dict = model_copy.state_dict()
             state_dict_v2 = copy.deepcopy(state_dict)
@@ -61,7 +61,7 @@ class NetworkBayesBeta(nn.Module):
 
         results = []
         m = Beta(torch.tensor(self.alpha), torch.tensor(self.beta))
-        for i in range(n_iter):
+        for _ in range(n_iter):
             p = m.sample()
             model_copy = copy.deepcopy(self.model)
             state_dict = model_copy.state_dict()

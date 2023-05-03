@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import matplotlib.pyplot as plt
 import torch
@@ -78,7 +78,7 @@ def _ComputeBarcode(data: torch.Tensor,
         VR = WeakAlphaPersistence(
             homology_dimensions=[0], collapse_edges=True, coeff=int(coefs_type))
     else:
-        assert False, "hom_type must be one of: \"standard\", \"sparse\", \"weak\"!"
+        raise Exception("hom_type must be one of: \"standard\", \"sparse\", \"weak\"!")
 
     if len(data.shape) > 2:
         data = torch.nn.Flatten()(data)
@@ -102,13 +102,14 @@ def InnerNetspaceHomologies(model: torch.nn.Module,
 def InnerNetspaceHomologiesExperimental(model: torch.nn.Module,
                                         x: torch.Tensor,
                                         layer: str,
-                                        dimensions: List[int] = [0],
+                                        dimensions: Optional[List[int]] = None,
                                         make_barplot: bool = True,
                                         rm_empty: bool = True):
     act = GetActivation(model, x, layer)
     act = act.reshape(1, *act.shape)
     # Dimensions must not be outside layer dimensionality
     N = act.shape[-1]
+    dimensions = dimensions if dimensions is not None else []
     dimensions = [i if i >= 0 else N + i for i in dimensions]
     dimensions = [i for i in dimensions if ((i >= 0) and (i < N))]
     dimensions = list(set(dimensions))
