@@ -67,13 +67,17 @@ def plot_barcode(barcode: Dict):
 def compute_barcode(data: torch.Tensor, hom_type: str, coefs_type: str):
     if hom_type == "standard":
         VR = VietorisRipsPersistence(
-            homology_dimensions=[0], collapse_edges=True, coeff=int(coefs_type)
+            homology_dimensions=[0],
+            collapse_edges=True,
+            coeff=int(coefs_type),
         )
     elif hom_type == "sparse":
         VR = SparseRipsPersistence(homology_dimensions=[0], coeff=int(coefs_type))
     elif hom_type == "weak":
         VR = WeakAlphaPersistence(
-            homology_dimensions=[0], collapse_edges=True, coeff=int(coefs_type)
+            homology_dimensions=[0],
+            collapse_edges=True,
+            coeff=int(coefs_type),
         )
     else:
         raise Exception('hom_type must be one of: "standard", "sparse", "weak"!')
@@ -88,7 +92,11 @@ def compute_barcode(data: torch.Tensor, hom_type: str, coefs_type: str):
 
 
 def get_homologies(
-    model: torch.nn.Module, x: torch.Tensor, layer: str, hom_type: str, coefs_type: str
+    model: torch.nn.Module,
+    x: torch.Tensor,
+    layer: str,
+    hom_type: str,
+    coefs_type: str,
 ):
     act = get_activation(model, x, layer)
     plot = compute_barcode(act, hom_type, coefs_type)

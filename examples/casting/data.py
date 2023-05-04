@@ -18,10 +18,10 @@ class MyDs(Dataset):
 
     def __getitem__(self, i):
         if i < len(self.pos_files):
-            pf = self.data_path / 'def_front' / self.pos_files[i]
+            pf = self.data_path / "def_front" / self.pos_files[i]
             lbl = 1
         else:
-            pf = self.data_path / 'ok_front' / self.neg_files[i - len(self.pos_files)]
+            pf = self.data_path / "ok_front" / self.neg_files[i - len(self.pos_files)]
             lbl = 0
         image = Image.open(pf)
         if self.tfm is not None:
@@ -30,8 +30,8 @@ class MyDs(Dataset):
 
 
 def create_datasets(data_path):
-    pos_files = sorted(os.listdir(data_path / 'def_front'))
-    neg_files = sorted(os.listdir(data_path / 'ok_front'))
+    pos_files = sorted(os.listdir(data_path / "def_front"))
+    neg_files = sorted(os.listdir(data_path / "ok_front"))
     np.random.seed(0)
     np.random.shuffle(pos_files)
     np.random.shuffle(neg_files)

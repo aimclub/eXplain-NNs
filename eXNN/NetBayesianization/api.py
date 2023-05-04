@@ -6,13 +6,15 @@ import torch.optim
 from eXNN.NetBayesianization.wrap import create_bayesian_wrapper
 
 
-def BasicBayesianPrediction(data: torch.Tensor,
-                            model: torch.nn.Module,
-                            n_iter: int,
-                            mode: str,
-                            p: Optional[float] = None,
-                            a: Optional[float] = None,
-                            b: Optional[float] = None) -> Dict[str, torch.Tensor]:
+def BasicBayesianPrediction(
+    data: torch.Tensor,
+    model: torch.nn.Module,
+    n_iter: int,
+    mode: str,
+    p: Optional[float] = None,
+    a: Optional[float] = None,
+    b: Optional[float] = None,
+) -> Dict[str, torch.Tensor]:
     """Function computes mean and standard deviation of bayesian equivalent
         of a neural network.
 
@@ -37,12 +39,14 @@ def BasicBayesianPrediction(data: torch.Tensor,
 
 
 class BasicBayesianWrapper:
-    def __init__(self,
-                 model: torch.nn.Module,
-                 mode: str,
-                 p: Optional[float] = None,
-                 a: Optional[float] = None,
-                 b: Optional[float] = None):
+    def __init__(
+        self,
+        model: torch.nn.Module,
+        mode: str,
+        p: Optional[float] = None,
+        a: Optional[float] = None,
+        b: Optional[float] = None,
+    ):
         """Class representing bayesian equivalent of a neural network.
 
         Args:
@@ -72,4 +76,4 @@ class BasicBayesianWrapper:
             Dict[str, torch.Tensor]: dictionary with `mean` and `std` of prediction
         """
         res = self.model.mean_forward(data, n_iter)
-        return {'mean': res[0], 'std': res[1]}
+        return {"mean": res[0], "std": res[1]}

@@ -25,7 +25,7 @@ def _get_module_by_name(model, name):
     for n, m in model.named_modules():
         if n == name:
             return m
-    raise Exception(f'Model does not contain submodule {name}')
+    raise Exception(f"Model does not contain submodule {name}")
 
 
 def get_hook(model, layer_name) -> Hook:
