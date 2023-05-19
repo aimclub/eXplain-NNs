@@ -1,24 +1,28 @@
 import math
+from typing import Dict, List, Optional
+
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from typing import Dict, List, Optional
-from sklearn.decomposition import PCA
 import umap
+from sklearn.decomposition import PCA
+
 from eXNN.InnerNeuralViz.hook import get_hook
 
 
 def _plot(embedding, labels):
     fig, ax = plt.subplots()
     ax.scatter(x=embedding[:, 0], y=embedding[:, 1], c=labels)
-    ax.axis('Off')
+    ax.axis("Off")
     plt.close()
     return fig
 
 
-def ReduceDim(data: torch.Tensor,
-              mode: str) -> np.ndarray:
+def ReduceDim(
+    data: torch.Tensor,
+    mode: str,
+) -> np.ndarray:
     """This function reduces data dimensionality to 2 dimensions.
 
     Args:
@@ -35,21 +39,22 @@ def ReduceDim(data: torch.Tensor,
     """
 
     data = data.detach().cpu().numpy().reshape((len(data), -1))
-    if mode == 'pca':
+    if mode == "pca":
         return PCA(n_components=2).fit_transform(data)
-    elif mode == 'umap':
+    elif mode == "umap":
         return umap.UMAP().fit_transform(data)
     else:
-        raise ValueError(f'Unsupported mode: `{mode}`')
+        raise ValueError(f"Unsupported mode: `{mode}`")
 
 
-def VisualizeNetSpace(model: torch.nn.Module,
-                      mode: str,
-                      data: torch.Tensor,
-                      layers: Optional[List[str]] = None,
-                      labels: Optional[torch.Tensor] = None,
-                      chunk_size: Optional[int] = None)\
-        -> Dict[str, matplotlib.figure.Figure]:
+def VisualizeNetSpace(
+    model: torch.nn.Module,
+    mode: str,
+    data: torch.Tensor,
+    layers: Optional[List[str]] = None,
+    labels: Optional[torch.Tensor] = None,
+    chunk_size: Optional[int] = None,
+) -> Dict[str, matplotlib.figure.Figure]:
     """This function visulizes data latent representations on neural network layers.
 
     Args:
@@ -77,8 +82,8 @@ def VisualizeNetSpace(model: torch.nn.Module,
     hooks = {layer: get_hook(model, layer) for layer in layers}
     if chunk_size is None:
         with torch.no_grad():
-            out = model(data)
-        visualizations = {'input': _plot(ReduceDim(data, mode), labels)}
+            _ = model(data)
+        visualizations = {"input": _plot(ReduceDim(data, mode), labels)}
         for layer in layers:
             visualizations[layer] = _plot(ReduceDim(hooks[layer].fwd, mode), labels)
         return visualizations
@@ -86,10 +91,10 @@ def VisualizeNetSpace(model: torch.nn.Module,
         representations = {layer: [] for layer in layers}
         for i in range(math.ceil(len(data) / chunk_size)):
             with torch.no_grad():
-                out = model(data[i * chunk_size:(i + 1) * chunk_size])
+                _ = model(data[(i * chunk_size) : ((i + 1) * chunk_size)])
             for layer in layers:
                 representations[layer].append(hooks[layer].fwd.detach().cpu())
-        visualizations = {'input': _plot(ReduceDim(data, mode), labels)}
+        visualizations = {"input": _plot(ReduceDim(data, mode), labels)}
         for layer in layers:
             layer_reprs = torch.cat(representations[layer], dim=0)
             visualizations[layer] = _plot(ReduceDim(layer_reprs, mode), labels)

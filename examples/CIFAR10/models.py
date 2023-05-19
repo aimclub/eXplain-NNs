@@ -1,7 +1,8 @@
 from typing import Union
+
 import torch
 from torch import Tensor
-from torch.nn import Conv2d, Parameter, Module
+from torch.nn import Conv2d, Module, Parameter
 from torch.nn.common_types import _size_2_t
 
 
@@ -61,8 +62,9 @@ class DecomposedConv2d(Conv2d):
         if decomposing_mode not in self.decomposing_modes_dict.keys():
             raise ValueError(
                 "decomposing_mode must be one of {}, but got decomposing_mode='{}'".format(
-                    self.decomposing_modes_dict.keys(), decomposing_mode
-                )
+                    self.decomposing_modes_dict.keys(),
+                    decomposing_mode,
+                ),
             )
         W = self.weight.view(self.decomposing_modes_dict[decomposing_mode])
         U, S, Vh = torch.linalg.svd(W, full_matrices=False)
@@ -79,8 +81,10 @@ class DecomposedConv2d(Conv2d):
         W = self.U @ torch.diag(self.S) @ self.Vh
         self.weight = Parameter(
             W.view(
-                self.out_channels, self.in_channels // self.groups, *self.kernel_size
-            )
+                self.out_channels,
+                self.in_channels // self.groups,
+                *self.kernel_size,
+            ),
         )
 
         self.register_parameter("U", None)
@@ -97,14 +101,14 @@ class DecomposedConv2d(Conv2d):
                 W.view(
                     self.out_channels,
                     self.in_channels // self.groups,
-                    *self.kernel_size
+                    *self.kernel_size,
                 ),
                 self.bias,
             )
         else:
             return self._conv_forward(input, self.weight, self.bias)
 
-    def set_U_S_Vh(self, u: Tensor, s: Tensor, vh: Tensor) -> None:
+    def set_decomposition_matrices(self, u: Tensor, s: Tensor, vh: Tensor) -> None:
         """Update U, S, Vh matrices."""
 
         assert self.decomposing, "for setting U, S and Vh, the model must be decomposed"
@@ -112,18 +116,19 @@ class DecomposedConv2d(Conv2d):
         self.S = Parameter(s)
         self.Vh = Parameter(vh)
 
+
 def energy_threshold_pruning(conv: DecomposedConv2d, energy_threshold: float) -> None:
     """Prune the weight matrices to the energy_threshold (in-place)."""
     assert conv.decomposing, "for pruning, the model must be decomposed"
     S, indices = conv.S.sort()
     U = conv.U[:, indices]
     Vh = conv.Vh[indices, :]
-    sum = (S ** 2).sum()
-    threshold = energy_threshold * sum
+    summ = (S ** 2).sum()
+    threshold = energy_threshold * summ
     for i, s in enumerate(S):
-        sum -= s ** 2
-        if sum < threshold:
-            conv.set_U_S_Vh(U[:, i:].clone(), S[i:].clone(), Vh[i:, :].clone())
+        summ -= s ** 2
+        if summ < threshold:
+            conv.set_decomposition_matrices(U[:, i:].clone(), S[i:].clone(), Vh[i:, :].clone())
             break
 
 
@@ -150,11 +155,13 @@ def decompose_module(model: Module, decomposing_mode: str = "channel") -> None:
             new_module.decompose(decomposing_mode=decomposing_mode)
             setattr(model, name, new_module)
 
+
 def prune_model(model, energy_threshold) -> None:
     """Prune the model weights to the energy_threshold."""
     for module in model.modules():
         if isinstance(module, DecomposedConv2d):
             energy_threshold_pruning(conv=module, energy_threshold=energy_threshold)
+
 
 def number_of_params(model) -> int:
     """Return number of model parameters."""

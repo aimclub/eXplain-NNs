@@ -1,12 +1,16 @@
+from typing import Dict, List
+
 import matplotlib
 import torch
-from typing import Dict, List
-from eXNN.InnerNeuralTopology.homologies import InnerNetspaceHomologies, _ComputeBarcode
+
+from eXNN.InnerNeuralTopology.homologies import compute_barcode, get_homologies
 
 
-def ComputeBarcode(data: torch.Tensor,
-                   hom_type: str,
-                   coefs_type: str) -> matplotlib.figure.Figure:
+def ComputeBarcode(
+    data: torch.Tensor,
+    hom_type: str,
+    coefs_type: str,
+) -> matplotlib.figure.Figure:
     """This function plots persistent homologies for a cloud of points as barcodes.
 
     Args:
@@ -19,14 +23,16 @@ def ComputeBarcode(data: torch.Tensor,
     Returns:
         matplotlib.figure.Figure: barcode plot
     """
-    return _ComputeBarcode(data, hom_type, coefs_type)
+    return compute_barcode(data, hom_type, coefs_type)
 
 
-def NetworkHomologies(model: torch.nn.Module,
-                      data: torch.Tensor,
-                      layers: List[str],
-                      hom_type: str,
-                      coefs_type: str) -> Dict[str, matplotlib.figure.Figure]:
+def NetworkHomologies(
+    model: torch.nn.Module,
+    data: torch.Tensor,
+    layers: List[str],
+    hom_type: str,
+    coefs_type: str,
+) -> Dict[str, matplotlib.figure.Figure]:
     """
     The function plots persistent homologies for latent representations
         on different levels of the neural network as barcodes.
@@ -46,5 +52,5 @@ def NetworkHomologies(model: torch.nn.Module,
     """
     res = {}
     for layer in layers:
-        res[layer] = InnerNetspaceHomologies(model, data, layer, hom_type, coefs_type)
+        res[layer] = get_homologies(model, data, layer, hom_type, coefs_type)
     return res
