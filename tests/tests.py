@@ -74,23 +74,30 @@ def test_beta_bayes_wrapper():
     _test_bayes_prediction("beta")
 
 
-def test_barcodes():
+def test_data_barcode():
     N, dim, data = utils.create_testing_data()
-    res = topology_api.ComputeBarcode(data, "standard", "3")
-    utils.compare_values(matplotlib.figure.Figure, type(res), "Wrong result type")
+    res = topology_api.get_data_barcode(data, "standard", "3")
+    utils.compare_values(dict, type(res), "Wrong result type")
 
 
-def test_homologies():
+def test_nn_barcodes():
     N, dim, data = utils.create_testing_data()
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
-    res = topology_api.NetworkHomologies(model, data, layers, "standard", "3")
+    res = topology_api.get_nn_barcodes(model, data, layers, "standard", "3")
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(2, len(res), "Wrong dictionary length")
     utils.compare_values(set(layers), set(res.keys()), "Wrong dictionary keys")
-    for layer, plot in res.items():
+    for layer, barcode in res.items():
         utils.compare_values(
-            matplotlib.figure.Figure,
-            type(plot),
+            dict,
+            type(barcode),
             f"Wrong result type for key {layer}",
         )
+
+
+def test_barcode_plot():
+    N, dim, data = utils.create_testing_data()
+    barcode = topology_api.get_data_barcode(data, "standard", "3")
+    plot = topology_api.plot_barcode(barcode)
+    utils.compare_values(matplotlib.figure.Figure, type(plot), "Wrong result type")
