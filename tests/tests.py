@@ -3,7 +3,7 @@ import numpy as np
 import torch
 
 import eXNN.InnerNeuralTopology as topology_api
-import eXNN.InnerNeuralViz as viz_api
+import eXNN.visualization as viz_api
 import eXNN.bayes as bayes_api
 import tests.test_utils as utils
 

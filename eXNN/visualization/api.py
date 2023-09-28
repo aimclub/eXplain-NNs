@@ -8,7 +8,7 @@ import torch
 import umap
 from sklearn.decomposition import PCA
 
-from eXNN.InnerNeuralViz.hook import get_hook
+from eXNN.visualization.hook import get_hook
 
 
 def _plot(embedding, labels):
