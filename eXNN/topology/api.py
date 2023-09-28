@@ -2,16 +2,17 @@ from typing import Dict, List
 
 import matplotlib
 import torch
+import numpy as np
 
-from eXNN.topology.homologies import compute_barcode, get_homologies
+from eXNN.topology import homologies
 
 
-def ComputeBarcode(
+def get_data_barcode(
     data: torch.Tensor,
     hom_type: str,
     coefs_type: str,
-) -> matplotlib.figure.Figure:
-    """This function plots persistent homologies for a cloud of points as barcodes.
+) -> Dict[str, np.ndarray]:
+    """This function computes persistent homologies for a cloud of points as barcodes.
 
     Args:
         data (torch.Tensor): input data of shape NxC1x...xCk,
@@ -21,18 +22,18 @@ def ComputeBarcode(
         coefs_type (str): coefficients type
 
     Returns:
-        matplotlib.figure.Figure: barcode plot
+        Dict[str, np.ndarray]: barcode
     """
-    return compute_barcode(data, hom_type, coefs_type)
+    return homologies.compute_data_barcode(data, hom_type, coefs_type)
 
 
-def NetworkHomologies(
+def get_nn_barcodes(
     model: torch.nn.Module,
     data: torch.Tensor,
     layers: List[str],
     hom_type: str,
     coefs_type: str,
-) -> Dict[str, matplotlib.figure.Figure]:
+) -> Dict[str, Dict[str, np.ndarray]]:
     """
     The function plots persistent homologies for latent representations
         on different levels of the neural network as barcodes.
@@ -48,9 +49,22 @@ def NetworkHomologies(
         coefs_type (str): coefficients type
 
     Returns:
-        Dict[str, matplotlib.figure.Figure]: dictionary with a barcode plot for each layer
+        Dict[str, Dict[str, np.ndarray]]: dictionary with a barcode for each layer
     """
     res = {}
     for layer in layers:
-        res[layer] = get_homologies(model, data, layer, hom_type, coefs_type)
+        res[layer] = homologies.compute_nn_barcode(model, data, layer, hom_type, coefs_type)
     return res
+
+
+def plot_barcode(barcode: Dict[str, np.ndarray]) -> matplotlib.figure.Figure:
+    """
+    The function creates a plot of a persistent homologies barcode.
+
+    Args:
+        barcode (Dict[str, np.ndarray]): barcode
+
+    Returns:
+        matplotlib.figure.Figure: a plot of the barcode
+    """
+    return homologies.plot_barcode(barcode)
