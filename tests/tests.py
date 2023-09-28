@@ -17,7 +17,7 @@ def test_check_random_input():
 
 def _check_reduce_dim(mode):
     N, dim, data = utils.create_testing_data()
-    reduced_data = viz_api.ReduceDim(data, mode)
+    reduced_data = viz_api.reduce_dim(data, mode)
     utils.compare_values(np.ndarray, type(reduced_data), "Wrong result type")
     utils.compare_values((N, 2), reduced_data.shape, "Wrong result shape")
 
@@ -34,7 +34,7 @@ def test_visualization():
     N, dim, data = utils.create_testing_data()
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
-    res = viz_api.VisualizeNetSpace(model, "umap", data, layers=layers)
+    res = viz_api.visualize_layer_manifolds(model, "umap", data, layers=layers)
 
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(3, len(res), "Wrong dictionary length")

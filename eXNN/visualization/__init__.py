@@ -1,1 +1,1 @@
-from .api import ReduceDim, VisualizeNetSpace, get_random_input
+from .api import reduce_dim, visualize_layer_manifolds, get_random_input
