@@ -95,7 +95,7 @@ class NetworkBayesBeta(nn.Module):
         return results
 
 
-def create_bayesian_wrapper(
+def create_dropout_bayesian_wrapper(
     model: torch.nn.Module,
     mode: Optional[str] = "basic",
     p: Optional[float] = None,

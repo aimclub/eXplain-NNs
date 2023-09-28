@@ -3,10 +3,10 @@ from typing import Dict, Optional
 import torch
 import torch.optim
 
-from eXNN.bayes.wrap import create_bayesian_wrapper
+from eXNN.bayes.wrap import create_dropout_bayesian_wrapper
 
 
-class BasicBayesianWrapper:
+class DropoutBayesianWrapper:
     def __init__(
         self,
         model: torch.nn.Module,
@@ -27,7 +27,7 @@ class BasicBayesianWrapper:
             b (Optional[float], optional): parameter of beta distribution (for `beta`
                 bayesianization). Defaults to None.
         """
-        self.model = create_bayesian_wrapper(model, mode, p=p, a=a, b=b)
+        self.model = create_dropout_bayesian_wrapper(model, mode, p=p, a=a, b=b)
 
     def predict(self, data, n_iter) -> Dict[str, torch.Tensor]:
         """Function computes mean and standard deviation of bayesian equivalent
