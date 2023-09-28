@@ -3,7 +3,7 @@ from typing import Dict, Optional
 import torch
 import torch.optim
 
-from eXNN.NetBayesianization.wrap import create_bayesian_wrapper
+from eXNN.bayes.wrap import create_bayesian_wrapper
 
 
 def BasicBayesianPrediction(
