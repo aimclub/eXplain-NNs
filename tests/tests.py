@@ -2,9 +2,9 @@ import matplotlib
 import numpy as np
 import torch
 
-import eXNN.InnerNeuralTopology as topology_api
-import eXNN.InnerNeuralViz as viz_api
-import eXNN.NetBayesianization as bayes_api
+import eXNN.bayes as bayes_api
+import eXNN.topology as topology_api
+import eXNN.visualization as viz_api
 import tests.test_utils as utils
 
 
@@ -17,7 +17,7 @@ def test_check_random_input():
 
 def _check_reduce_dim(mode):
     N, dim, data = utils.create_testing_data()
-    reduced_data = viz_api.ReduceDim(data, mode)
+    reduced_data = viz_api.reduce_dim(data, mode)
     utils.compare_values(np.ndarray, type(reduced_data), "Wrong result type")
     utils.compare_values((N, 2), reduced_data.shape, "Wrong result shape")
 
@@ -34,7 +34,7 @@ def test_visualization():
     N, dim, data = utils.create_testing_data()
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
-    res = viz_api.VisualizeNetSpace(model, "umap", data, layers=layers)
+    res = viz_api.visualize_layer_manifolds(model, "umap", data, layers=layers)
 
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(3, len(res), "Wrong dictionary length")
@@ -51,16 +51,13 @@ def test_visualization():
         )
 
 
-def _test_bayes_prediction(use_wrapper: bool, mode: str):
+def _test_bayes_prediction(mode: str):
     params = {"basic": dict(mode="basic", p=0.5), "beta": dict(mode="beta", a=0.9, b=0.2)}
 
     N, dim, data = utils.create_testing_data()
     model = utils.create_testing_model()
     n_iter = 10
-    if use_wrapper:
-        res = bayes_api.BasicBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
-    else:
-        res = bayes_api.BasicBayesianPrediction(data, model, n_iter=n_iter, **(params[mode]))
+    res = bayes_api.DropoutBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
 
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(2, len(res), "Wrong dictionary length")
@@ -69,20 +66,12 @@ def _test_bayes_prediction(use_wrapper: bool, mode: str):
     utils.compare_values(torch.Size([N, n_iter]), res["std"].shape, "Wrong mean std")
 
 
-def test_basic_bayes_prediction():
-    _test_bayes_prediction(False, "basic")
-
-
-def test_beta_bayes_prediction():
-    _test_bayes_prediction(False, "beta")
-
-
 def test_basic_bayes_wrapper():
-    _test_bayes_prediction(True, "basic")
+    _test_bayes_prediction("basic")
 
 
 def test_beta_bayes_wrapper():
-    _test_bayes_prediction(True, "beta")
+    _test_bayes_prediction("beta")
 
 
 def test_barcodes():

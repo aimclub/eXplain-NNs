@@ -8,7 +8,7 @@ import torch
 import umap
 from sklearn.decomposition import PCA
 
-from eXNN.InnerNeuralViz.hook import get_hook
+from eXNN.visualization.hook import get_hook
 
 
 def _plot(embedding, labels):
@@ -19,7 +19,7 @@ def _plot(embedding, labels):
     return fig
 
 
-def ReduceDim(
+def reduce_dim(
     data: torch.Tensor,
     mode: str,
 ) -> np.ndarray:
@@ -47,7 +47,7 @@ def ReduceDim(
         raise ValueError(f"Unsupported mode: `{mode}`")
 
 
-def VisualizeNetSpace(
+def visualize_layer_manifolds(
     model: torch.nn.Module,
     mode: str,
     data: torch.Tensor,
@@ -83,9 +83,9 @@ def VisualizeNetSpace(
     if chunk_size is None:
         with torch.no_grad():
             _ = model(data)
-        visualizations = {"input": _plot(ReduceDim(data, mode), labels)}
+        visualizations = {"input": _plot(reduce_dim(data, mode), labels)}
         for layer in layers:
-            visualizations[layer] = _plot(ReduceDim(hooks[layer].fwd, mode), labels)
+            visualizations[layer] = _plot(reduce_dim(hooks[layer].fwd, mode), labels)
         return visualizations
     else:
         representations = {layer: [] for layer in layers}
@@ -94,10 +94,10 @@ def VisualizeNetSpace(
                 _ = model(data[(i * chunk_size) : ((i + 1) * chunk_size)])
             for layer in layers:
                 representations[layer].append(hooks[layer].fwd.detach().cpu())
-        visualizations = {"input": _plot(ReduceDim(data, mode), labels)}
+        visualizations = {"input": _plot(reduce_dim(data, mode), labels)}
         for layer in layers:
             layer_reprs = torch.cat(representations[layer], dim=0)
-            visualizations[layer] = _plot(ReduceDim(layer_reprs, mode), labels)
+            visualizations[layer] = _plot(reduce_dim(layer_reprs, mode), labels)
         return visualizations
 
 
