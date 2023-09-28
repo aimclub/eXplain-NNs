@@ -3,7 +3,7 @@ from typing import Dict, List
 import matplotlib
 import torch
 
-from eXNN.InnerNeuralTopology.homologies import compute_barcode, get_homologies
+from eXNN.topology.homologies import compute_barcode, get_homologies
 
 
 def ComputeBarcode(
