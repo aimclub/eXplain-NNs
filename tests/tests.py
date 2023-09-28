@@ -2,9 +2,9 @@ import matplotlib
 import numpy as np
 import torch
 
+import eXNN.bayes as bayes_api
 import eXNN.topology as topology_api
 import eXNN.visualization as viz_api
-import eXNN.bayes as bayes_api
 import tests.test_utils as utils
 
 

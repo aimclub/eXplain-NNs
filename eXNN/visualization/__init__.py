@@ -1,1 +1,1 @@
-from .api import reduce_dim, visualize_layer_manifolds, get_random_input
+from .api import get_random_input, reduce_dim, visualize_layer_manifolds
