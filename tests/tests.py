@@ -51,16 +51,13 @@ def test_visualization():
         )
 
 
-def _test_bayes_prediction(use_wrapper: bool, mode: str):
+def _test_bayes_prediction(mode: str):
     params = {"basic": dict(mode="basic", p=0.5), "beta": dict(mode="beta", a=0.9, b=0.2)}
 
     N, dim, data = utils.create_testing_data()
     model = utils.create_testing_model()
     n_iter = 10
-    if use_wrapper:
-        res = bayes_api.BasicBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
-    else:
-        res = bayes_api.BasicBayesianPrediction(data, model, n_iter=n_iter, **(params[mode]))
+    res = bayes_api.BasicBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
 
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(2, len(res), "Wrong dictionary length")
@@ -69,20 +66,12 @@ def _test_bayes_prediction(use_wrapper: bool, mode: str):
     utils.compare_values(torch.Size([N, n_iter]), res["std"].shape, "Wrong mean std")
 
 
-def test_basic_bayes_prediction():
-    _test_bayes_prediction(False, "basic")
-
-
-def test_beta_bayes_prediction():
-    _test_bayes_prediction(False, "beta")
-
-
 def test_basic_bayes_wrapper():
-    _test_bayes_prediction(True, "basic")
+    _test_bayes_prediction("basic")
 
 
 def test_beta_bayes_wrapper():
-    _test_bayes_prediction(True, "beta")
+    _test_bayes_prediction("beta")
 
 
 def test_barcodes():

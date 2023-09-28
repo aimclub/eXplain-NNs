@@ -1,1 +1,1 @@
-from .api import BasicBayesianPrediction, BasicBayesianWrapper
+from .api import BasicBayesianWrapper
