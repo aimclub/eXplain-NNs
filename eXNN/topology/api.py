@@ -1,8 +1,8 @@
 from typing import Dict, List
 
 import matplotlib
-import torch
 import numpy as np
+import torch
 
 from eXNN.topology import homologies
 

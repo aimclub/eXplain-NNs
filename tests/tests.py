@@ -1,7 +1,8 @@
+from typing import Dict
+
 import matplotlib
 import numpy as np
 import torch
-from typing import Dict
 
 import eXNN.bayes as bayes_api
 import eXNN.topology as topology_api
@@ -95,6 +96,7 @@ def test_nn_barcodes():
             type(barcode),
             f"Wrong result type for key {layer}",
         )
+
 
 def test_barcode_plot():
     N, dim, data = utils.create_testing_data()
