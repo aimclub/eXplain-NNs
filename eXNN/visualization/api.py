@@ -116,6 +116,7 @@ def visualize_recurrent_layer_manifolds(
     out_dim=3,
     renderer='browser',
     layers: Optional[List[str]] = None,
+    labels: Optional[torch.Tensor] = None,
     chunk_size: Optional[int] = None,
 ) -> Dict[str, plotly.graph_objs._figure.Figure]:
     """This function visulizes data latent representations on neural network layers.
@@ -141,6 +142,8 @@ def visualize_recurrent_layer_manifolds(
                  'iframe_connected', 'sphinx_gallery', 'sphinx_gallery_png']
         layers (Optional[List[str]], optional): list of layers for visualization.
             Defaults to None. If None, visualization for all layers is performed
+        labels (Optional[torch.Tensor], optional): data labels (colors).
+            Defaults to None. If None, all points are visualized with the same color
         chunk_size (Optional[int], optional): batch size for data processing.
             Defaults to None. If None, all data is processed in one batch
 
