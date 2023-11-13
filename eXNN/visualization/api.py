@@ -115,7 +115,7 @@ def visualize_recurrent_layer_manifolds(
     renderer = 'browser',
     layers: Optional[List[str]] = None,
     chunk_size: Optional[int] = None,
-)
+) -> Dict[str, plotly.graph_objs._figure.Figure]: 
     """This function visulizes data latent representations on neural network layers.
 
     Args:
