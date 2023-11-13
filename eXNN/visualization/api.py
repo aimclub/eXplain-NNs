@@ -118,7 +118,7 @@ def visualize_recurrent_layer_manifolds(
     layers: Optional[List[str]] = None,
     labels: Optional[torch.Tensor] = None,
     chunk_size: Optional[int] = None,
-) -> Dict[str, plotly.graph_objs._figure.Figure]:
+) -> Dict[str, plotly.graph_objs.Figure]:
     """This function visulizes data latent representations on neural network layers.
 
     Args:
@@ -148,7 +148,7 @@ def visualize_recurrent_layer_manifolds(
             Defaults to None. If None, all data is processed in one batch
 
     Returns:
-        Dict[str, plotly.graph_objs._figure.Figure]: dictionary with latent
+        Dict[str, plotly.graph_objs.Figure]: dictionary with latent
             representations visualization for each layer
     """
     if layers is None:
