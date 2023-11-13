@@ -3,14 +3,14 @@ from typing import Dict, List, Optional
 
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import plotly
 import plotly.express as px
-import numpy as np
 import torch
 import umap
-import pandas as pd
-from sklearn.decomposition import PCA
 from gtda.time_series import TakensEmbedding
+from sklearn.decomposition import PCA
 
 from eXNN.visualization.hook import get_hook
 
@@ -151,13 +151,15 @@ def visualize_recurrent_layer_manifolds(
     if layers is None:
         layers = [_[0] for _ in model.named_children()]
     layer_output = {layer: get_hook(model, layer) for layer in layers}
+    if labels is not None:
+        labels = labels.detach().cpu().numpy()
     if stride_mode == 'dimensional':
         stride = layer_output.shape[layer_output.ndim - 1]
     else:
         stride = stride_mode
     if layer_output.ndim > 2:
         embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
-        emb_res = embedder.fit_transform(layer_output[:, 0, :].reshape(1,-1))
+        emb_res = embedder.fit_transform(layer_output[:, 0, :].reshape(1, -1))
     else:
         embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
         emb_res = embedder.fit_transform(layer_output.reshape(1, -1))
@@ -168,7 +170,7 @@ def visualize_recurrent_layer_manifolds(
         PCA_out = PCA(n_components=3)
         reducing_output = PCA_out.fit_transform(emb_res[0, :, :])
     df = pd.DataFrame(reducing_output)
-    df["category"] = y_train.astype(str)
+    df["category"] = labels.astype(str)
     df = df.iloc[::4, :]
     emb_out = px.scatter_3d(df, x=0, y=1, z=2, color='category')
     emb_out.update_traces(marker=dict(size=4))
