@@ -3,7 +3,7 @@ from typing import Dict, Optional
 import torch
 import torch.optim
 
-from eXNN.bayes.wrap import create_dropout_bayesian_wrapper
+from eXNN.bayes.wrapper import create_dropout_bayesian_wrapper
 
 
 class DropoutBayesianWrapper:
