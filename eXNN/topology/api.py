@@ -69,7 +69,10 @@ def plot_barcode(barcode: Dict[str, np.ndarray]) -> matplotlib.figure.Figure:
     """
     return homologies.plot_barcode(barcode)
 
-def evaluate_barcode(barcode: Dict[str, np.ndarray], metric_name:Optional[str]=None) -> Union[float, Dict[str, float]]:
+
+def evaluate_barcode(
+    barcode: Dict[str, np.ndarray], metric_name: Optional[str] = None
+) -> Union[float, Dict[str, float]]:
     """
     The function evaluates a persistent homologies barcode with a metric.
 

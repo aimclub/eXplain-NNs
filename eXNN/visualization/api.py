@@ -112,9 +112,9 @@ def visualize_recurrent_layer_manifolds(
     neighbors=20,
     time_delay=1,
     embedding_dim=10,
-    stride_mode='dimensional',
+    stride_mode="dimensional",
     out_dim=3,
-    renderer='browser',
+    renderer="browser",
     layers: Optional[List[str]] = None,
     labels: Optional[torch.Tensor] = None,
     chunk_size: Optional[int] = None,
@@ -156,7 +156,7 @@ def visualize_recurrent_layer_manifolds(
     layer_output = {layer: get_hook(model, layer) for layer in layers}
     if labels is not None:
         labels = labels.detach().cpu().numpy()
-    if stride_mode == 'dimensional':
+    if stride_mode == "dimensional":
         stride = layer_output.shape[layer_output.ndim - 1]
     else:
         stride = stride_mode
@@ -166,21 +166,22 @@ def visualize_recurrent_layer_manifolds(
     else:
         embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
         emb_res = embedder.fit_transform(layer_output.reshape(1, -1))
-    if mode.lower() == 'umap':
+    if mode.lower() == "umap":
         umapred = umap.UMAP(n_components=3, n_neighbors=neighbors)
         reducing_output = umapred.fit_transform(emb_res[0, :, :])
-    if mode.lower() == 'pca':
+    if mode.lower() == "pca":
         PCA_out = PCA(n_components=3)
         reducing_output = PCA_out.fit_transform(emb_res[0, :, :])
     df = pd.DataFrame(reducing_output)
     df["category"] = labels.astype(str)
     df = df.iloc[::4, :]
-    emb_out = px.scatter_3d(df, x=0, y=1, z=2, color='category')
+    emb_out = px.scatter_3d(df, x=0, y=1, z=2, color="category")
     emb_out.update_traces(marker=dict(size=4))
     emb_out.update_layout(
         autosize=False,
         width=1000,
-        height=1000)
+        height=1000,
+    )
     emb_out.show(renderer="colab")
 
 

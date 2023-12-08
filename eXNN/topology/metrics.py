@@ -1,29 +1,30 @@
 import heapq
+
 import numpy as np
+
 
 def _get_available_metrics():
     return {
         # absolute length based metrics
-        'max_length': _compute_longest_interval_metric,
-        'mean_length': _compute_length_mean_metric,
-        'median_length': _compute_length_median_metric,
-        'stdev_length': _compute_length_stdev_metric,
-        'sum_length': _compute_length_sum_metric,
+        "max_length": _compute_longest_interval_metric,
+        "mean_length": _compute_length_mean_metric,
+        "median_length": _compute_length_median_metric,
+        "stdev_length": _compute_length_stdev_metric,
+        "sum_length": _compute_length_sum_metric,
         # relative length based metrics
-        'ratio_2_1': _compute_two_to_one_ratio_metric,
-        'ratio_3_1': _compute_three_to_one_ratio_metric,
+        "ratio_2_1": _compute_two_to_one_ratio_metric,
+        "ratio_3_1": _compute_three_to_one_ratio_metric,
         # entopy based metrics
-        'h': _compute_entropy_metric,
-        'normh': _compute_normed_entropy_metric,
+        "h": _compute_entropy_metric,
+        "normh": _compute_normed_entropy_metric,
         # signal to noise ration
-        'snr': _compute_snr_metric,
+        "snr": _compute_snr_metric,
         # birth-death based metrics
-        'mean_birth': _compute_births_mean_metric,
-        'stdev_birth': _compute_births_stdev_metric,
-        'mean_death': _compute_deaths_mean_metric,
-        'stdev_death': _compute_deaths_stdev_metric,
+        "mean_birth": _compute_births_mean_metric,
+        "stdev_birth": _compute_births_stdev_metric,
+        "mean_death": _compute_deaths_mean_metric,
+        "stdev_death": _compute_deaths_stdev_metric,
     }
-
 
 
 def compute_metric(barcode, metric_name=None):
@@ -35,7 +36,7 @@ def compute_metric(barcode, metric_name=None):
 
 
 def _get_lengths(barcode):
-    diag = barcode['H0']
+    diag = barcode["H0"]
     return [d[1] - d[0] for d in diag]
 
 
@@ -78,12 +79,13 @@ def _compute_three_to_one_ratio_metric(barcode):
 
 
 # Compute the persistent entropy and normed persistent entropy
-def _get_entropy(values, normalize:bool):
+def _get_entropy(values, normalize: bool):
     values_sum = np.sum(values)
     entropy = (-1) * np.sum(np.divide(values, values_sum) * np.log(np.divide(values, values_sum)))
     if normalize:
         entropy = entropy / np.log(values_sum)
     return entropy
+
 
 def _compute_entropy_metric(barcode):
     return _get_entropy(_get_lengths(barcode), normalize=False).item()
@@ -95,13 +97,13 @@ def _compute_normed_entropy_metric(barcode):
 
 # Compute births
 def _get_births(barcode):
-    diag = barcode['H0']
+    diag = barcode["H0"]
     return np.array([x[0] for x in diag])
 
 
 # Comput deaths
 def _get_deaths(barcode):
-    diag = barcode['H0']
+    diag = barcode["H0"]
     return np.array([x[1] for x in diag])
 
 
