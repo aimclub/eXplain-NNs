@@ -41,38 +41,40 @@ def _get_lengths(barcode):
 
 def _compute_longest_interval_metric(barcode):
     lengths = _get_lengths(barcode)
-    return max(lengths)
+    return np.max(lengths).item()
 
 
 def _compute_length_mean_metric(barcode):
     lengths = _get_lengths(barcode)
-    return np.mean(lengths)
+    return np.mean(lengths).item()
 
 
 def _compute_length_median_metric(barcode):
     lengths = _get_lengths(barcode)
-    return np.median(lengths)
+    return np.median(lengths).item()
 
 
 def _compute_length_stdev_metric(barcode):
     lengths = _get_lengths(barcode)
-    return np.std(lengths)
+    return np.std(lengths).item()
 
 
 def _compute_length_sum_metric(barcode):
     lengths = _get_lengths(barcode)
-    return np.sum(lengths)
+    return np.sum(lengths).item()
 
 
 # Proportion between the longest intervals: 2/1 ratio, 3/1 ratio
 def _compute_two_to_one_ratio_metric(barcode):
     lengths = _get_lengths(barcode)
-    return heapq.nlargest(2, lengths)[1] / lengths[0]
+    value = heapq.nlargest(2, lengths)[1] / lengths[0]
+    return value.item()
 
 
 def _compute_three_to_one_ratio_metric(barcode):
     lengths = _get_lengths(barcode)
-    return heapq.nlargest(3, lengths)[2] / lengths[0]
+    value = heapq.nlargest(3, lengths)[2] / lengths[0]
+    return value.item()
 
 
 # Compute the persistent entropy and normed persistent entropy
@@ -84,11 +86,11 @@ def _get_entropy(values, normalize:bool):
     return entropy
 
 def _compute_entropy_metric(barcode):
-    return _get_entropy(_get_lengths(barcode), normalize=False)
+    return _get_entropy(_get_lengths(barcode), normalize=False).item()
 
 
 def _compute_normed_entropy_metric(barcode):
-    return _get_entropy(_get_lengths(barcode), normalize=True)
+    return _get_entropy(_get_lengths(barcode), normalize=True).item()
 
 
 # Compute births
@@ -122,21 +124,21 @@ def _compute_snr_metric(barcode):
     signal = np.mean(deaths - births)
     noise = np.std(births)
     snr = signal / noise
-    return snr
+    return snr.item()
 
 
 # Compute the birth-death pair indices: Birth mean, birth stdev, death mean, death stdev
 def _compute_births_mean_metric(barcode):
-    return np.mean(_get_births(barcode))
+    return np.mean(_get_births(barcode)).item()
 
 
 def _compute_births_stdev_metric(barcode):
-    return np.std(_get_births(barcode))
+    return np.std(_get_births(barcode)).item()
 
 
 def _compute_deaths_mean_metric(barcode):
-    return np.mean(_get_deaths(barcode))
+    return np.mean(_get_deaths(barcode)).item()
 
 
 def _compute_deaths_stdev_metric(barcode):
-    return np.std(_get_deaths(barcode))
+    return np.std(_get_deaths(barcode)).item()
