@@ -101,3 +101,15 @@ def test_barcode_plot():
     barcode = topology_api.get_data_barcode(data, "standard", "3")
     plot = topology_api.plot_barcode(barcode)
     utils.compare_values(matplotlib.figure.Figure, type(plot), "Wrong result type")
+
+def test_evaluate_barcode():
+    N, dim, data = utils.create_testing_data()
+    barcode = topology_api.get_data_barcode(data, "standard", "3")
+    metrics = topology_api.plot_barcode(barcode)
+    utils.compare_values(dict, type(metrics), "Wrong result type")
+    all_metric_names = ['h', 'max_length', 'mean_birth', 'mean_death', 
+        'mean_length', 'median_length', 'normh', 'ratio_2_1', 'ratio_3_1', 
+        'snr', 'stdev_birth', 'stdev_death', 'stdev_length', 'sum_length']
+    utils.compare_values(all_metric_names, sorted(metrics.keys()))
+    for name, value in metrics.items():
+        utils.compare_values(float, type(value), f"Wrong result type for metric {name}")

@@ -1,10 +1,10 @@
-from typing import Dict, List
+from typing import Dict, List, Optional, Union
 
 import matplotlib
 import numpy as np
 import torch
 
-from eXNN.topology import homologies
+from eXNN.topology import homologies, metrics
 
 
 def get_data_barcode(
@@ -68,3 +68,18 @@ def plot_barcode(barcode: Dict[str, np.ndarray]) -> matplotlib.figure.Figure:
         matplotlib.figure.Figure: a plot of the barcode
     """
     return homologies.plot_barcode(barcode)
+
+def evaluate_barcode(barcode: Dict[str, np.ndarray], metric_name:Optional[str]=None) -> Union[float, Dict[str, float]]:
+    """
+    The function evaluates a persistent homologies barcode with a metric.
+
+    Args:
+        barcode (Dict[str, np.ndarray]): barcode
+        metric_name (Optional[str]): metric name
+            (if `None` all available metrics values are computed)
+
+    Returns:
+        Union(float, Dict[str, float]): float if metric is specified
+            or a dictionary with value of each available metric
+    """
+    return metrics.compute_metric(barcode, metric_name)
