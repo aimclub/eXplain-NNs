@@ -173,7 +173,7 @@ def visualize_recurrent_layer_manifolds(
             emb_res = embedder.fit_transform(layer_output_n)
         else:
             embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
-            emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0], 
+            emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
                                                                   1, layer_output.shape[1]))
             emb_res = emb_res.reshape(emb_res.shape[0], 1, -1)
         if mode.lower() == 'umap':
@@ -191,9 +191,9 @@ def visualize_recurrent_layer_manifolds(
         emb_out = px.scatter_3d(df, x=0, y=1, z=2, color="category")
         emb_out.update_traces(marker=dict(size=4))
         emb_out.update_layout(
-          autosize=False,
-          width=1000,
-          height=1000)
+            autosize=False,
+            width=1000,
+            height=1000)
         emb_out.show(renderer="colab")
 
 
