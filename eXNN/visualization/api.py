@@ -156,9 +156,9 @@ def visualize_recurrent_layer_manifolds(
     labels = labels.detach().numpy()
     for layer in layers:
         if torch.is_tensor(model2(data)[layer]):
-            layer_output = model2(data)[layer].detach().numpy()
+            layer_output = model2(data)[layer].cpu().detach().numpy()
         else:
-            layer_output = model2(data)[layer][0].detach().numpy()
+            layer_output = model2(data)[layer][0].cpu().detach().numpy()
         if stride_mode == 'dimensional':
             stride = layer_output.shape[layer_output.ndim - 1]
         else:
@@ -166,11 +166,7 @@ def visualize_recurrent_layer_manifolds(
         if layer_output.ndim > 2:
             embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
             PCA_rnn = PCA(n_components=10)
-            layer_output_n = []
-            for i in range(layer_output.shape[0]):
-                layer_output_n.append(PCA_rnn.fit_transform(layer_output[i, :, :]))
-            layer_output_n = np.array(layer_output_n)
-            emb_res = embedder.fit_transform(layer_output_n)
+            emb_res = embedder.fit_transform(layer_output)
         else:
             embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
             emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
