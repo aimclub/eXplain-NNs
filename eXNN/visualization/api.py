@@ -165,7 +165,6 @@ def visualize_recurrent_layer_manifolds(
             stride = stride_mode
         if layer_output.ndim > 2:
             embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
-            PCA_rnn = PCA(n_components=10)
             emb_res = embedder.fit_transform(layer_output)
         else:
             embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
