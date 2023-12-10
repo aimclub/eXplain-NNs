@@ -11,6 +11,7 @@ import torch
 import umap
 from gtda.time_series import TakensEmbedding
 from sklearn.decomposition import PCA
+from torchvision.models.feature_extraction import create_feature_extractor
 
 from eXNN.visualization.hook import get_hook
 
@@ -151,38 +152,44 @@ def visualize_recurrent_layer_manifolds(
         Dict[str, plotly.graph_objs.Figure]: dictionary with latent
             representations visualization for each layer
     """
-    if layers is None:
-        layers = [_[0] for _ in model.named_children()]
-    layer_output = {layer: get_hook(model, layer) for layer in layers}
-    if labels is not None:
-        labels = labels.detach().cpu().numpy()
-    if stride_mode == "dimensional":
-        stride = layer_output.shape[layer_output.ndim - 1]
-    else:
-        stride = stride_mode
-    if layer_output.ndim > 2:
-        embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
-        emb_res = embedder.fit_transform(layer_output[:, 0, :].reshape(1, -1))
-    else:
-        embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
-        emb_res = embedder.fit_transform(layer_output.reshape(1, -1))
-    if mode.lower() == "umap":
-        umapred = umap.UMAP(n_components=3, n_neighbors=neighbors)
-        reducing_output = umapred.fit_transform(emb_res[0, :, :])
-    if mode.lower() == "pca":
-        PCA_out = PCA(n_components=3)
-        reducing_output = PCA_out.fit_transform(emb_res[0, :, :])
-    df = pd.DataFrame(reducing_output)
-    df["category"] = labels.astype(str)
-    df = df.iloc[::4, :]
-    emb_out = px.scatter_3d(df, x=0, y=1, z=2, color="category")
-    emb_out.update_traces(marker=dict(size=4))
-    emb_out.update_layout(
-        autosize=False,
-        width=1000,
-        height=1000,
-    )
-    emb_out.show(renderer="colab")
+    model2 = create_feature_extractor(model, return_nodes=layers)
+    labels = labels.detach().numpy()
+    for layer in layers:
+        if torch.is_tensor(model2(data)[layer]):
+            layer_output = model2(data)[layer].cpu().detach().numpy()
+        else:
+            layer_output = model2(data)[layer][0].cpu().detach().numpy()
+        if stride_mode == 'dimensional':
+            stride = layer_output.shape[layer_output.ndim - 1]
+        else:
+            stride = stride_mode
+        if layer_output.ndim > 2:
+            embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
+            emb_res = embedder.fit_transform(layer_output)
+        else:
+            embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
+            emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
+                                                                  1, layer_output.shape[1]))
+            emb_res = emb_res.reshape(emb_res.shape[0], 1, -1)
+        if mode.lower() == 'umap':
+            umapred = umap.UMAP(n_components=3, n_neighbors=neighbors)
+            reducing_output = umapred.fit_transform(emb_res[:, 0, :])
+        if mode.lower() == 'pca':
+            PCA_out = PCA(n_components=3)
+            reducing_output = PCA_out.fit_transform(emb_res[:, 0, :])
+        df = pd.DataFrame(reducing_output)
+        if labels.shape[1] == 1:
+            df["category"] = labels.astype(str)
+        else:
+            df["category"] = np.where(labels == 1)[1].astype(str)
+        # df = df.iloc[::4, :]
+        emb_out = px.scatter_3d(df, x=0, y=1, z=2, color="category")
+        emb_out.update_traces(marker=dict(size=4))
+        emb_out.update_layout(
+            autosize=False,
+            width=1000,
+            height=1000)
+        emb_out.show(renderer="colab")
 
 
 def get_random_input(dims: List[int]) -> torch.Tensor:
