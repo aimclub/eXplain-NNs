@@ -1,22 +1,25 @@
 import copy
+from typing import Optional
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions import Beta
-from typing import Optional
 
-class DropoutBayesianWrapper(nn.Module):
+
+class ModuleBayesianWrapper(nn.Module):
     def __init__(
-        self, 
-        layer: nn.Module, 
-        p: Optional[float] = None, 
-        a: Optional[float] = None, 
+        self,
+        layer: nn.Module,
+        p: Optional[float] = None,
+        a: Optional[float] = None,
         b: Optional[float] = None
     ):
-        super(DropoutBayesianWrapper, self).__init__()
+        super(ModuleBayesianWrapper, self).__init__()
 
-        assert (p is not None) != ((a is not None) and (b is not None)), "You can either specify p (simple dropout), or specify a and b (beta dropout)"
-        
+        pab_check = "You can either specify p (simple dropout), or specify a and b (beta dropout)"
+        assert (p is not None) != ((a is not None) and (b is not None)), pab_check
+
         if not type(layer) in [nn.Linear, nn.Conv1d, nn.Conv2d, nn.Conv3d]:
             # At the moment we are only modifying linear and convolutional layers
             self.layer = layer
@@ -27,7 +30,8 @@ class DropoutBayesianWrapper(nn.Module):
             self.a, self.b = a, b
 
             if self.p is None:
-                assert (self.a is not None) and (self.b is not None), "If you choose to specify a and b, you must to specify both"
+                ab_check = "If you choose to specify a and b, you must to specify both"
+                assert (self.a is not None) and (self.b is not None), ab_check
 
     def dropout_weights(self, weights, bias):
         if self.p is not None:
@@ -77,7 +81,9 @@ class NetworkBayes(nn.Module):
 
         super(NetworkBayes, self).__init__()
         self.model = copy.deepcopy(model)
-        self.model = replace_modules_with_wrapper(self.model, DropoutBayesianWrapper, {"p": dropout_p})
+        self.model = replace_modules_with_wrapper(self.model,
+                                                  ModuleBayesianWrapper,
+                                                  {"p": dropout_p})
 
     def mean_forward(
         self,
@@ -88,10 +94,8 @@ class NetworkBayes(nn.Module):
         results = []
         for _ in range(n_iter):
             results.append(self.model.forward(data))
-        
 
         results = torch.stack(results, dim=1)
-
         results = torch.stack(
             [
                 torch.mean(results, dim=1),
@@ -113,7 +117,9 @@ class NetworkBayesBeta(nn.Module):
 
         super(NetworkBayesBeta, self).__init__()
         self.model = copy.deepcopy(model)
-        self.model = replace_modules_with_wrapper(self.model, DropoutBayesianWrapper, {"a": alpha, "b": beta})
+        self.model = replace_modules_with_wrapper(self.model,
+                                                  ModuleBayesianWrapper,
+                                                  {"a": alpha, "b": beta})
 
     def mean_forward(
         self,
@@ -124,7 +130,6 @@ class NetworkBayesBeta(nn.Module):
         results = []
         for _ in range(n_iter):
             results.append(self.model.forward(data))
-        
 
         results = torch.stack(results, dim=1)
 
@@ -152,4 +157,3 @@ def create_dropout_bayesian_wrapper(
         net = NetworkBayesBeta(model, a, b)
 
     return net
-
