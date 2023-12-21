@@ -87,14 +87,27 @@
 
 
 ## Примеры и тьюториалы
-Примеры использования API библиотеки:
-* [Визуализация](/examples/minimal/Visualization.ipynb)
-* [Гомологии](/examples/minimal/Homologies.ipynb)
-* [Байесианизация](/examples/minimal/Bayesianization.ipynb)
+Колабы, демонстрирующие, как работать с различными модулями нашего API:
+| Colab Link | Module |
+| ------------- | ------------- |
+| [![bayes](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Ayd0IronxUIfnbAmWQLHiILG2qtBBpF4?usp=sharing)| bayes |
+| [![topology](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1T5ENfNaCIRI61LM2ZhtU8lfmvRmlfiEo?usp=sharing)| topology |
+| [![visualization](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1LJVdWTv-wcASSMX4is_E15TR7XJsT7W3?usp=sharing)| visualization |
 
-Примеры использования библиотеки для индустриальных задач:
-* [CIFAR10 classification](/examples/CIFAR10)
-* [casting defect detection](/examples/casting)
+Больше ноутбуков с примерами можно найти [здесь](/examples/)
+
+### Use Cases
+TBD
+
+### Industrial Applications
+В этом блоке приведены примеры использования eXplain-NN для решения промышленных задач. Для демонстрационных целей используются 2 задачи:
+* [casting] выявление дефектов литейных материалов
+* [CIFAR] классификация естественных изображений в наборе данных CIFAR.
+
+| Colab Link | Task | Use Case |
+| ------------- | ------------- | ------------- |
+| [![casting_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/16buElLs1hv0lBP2wglbiM7DLTwdsudcm?usp=sharing)| casting | Визуализация изменения многообразия данных от слоя к слою |
+| [![CIFAR_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/12ZJigH-0geGTefNXnCM5dQ71d4tqlf6L?usp=sharing)| CIFAR | Визуализация изменения многообразия данных от слоя к слою |
 
 ## Как помочь проекту
 [Инструкции](/docs/contribution.md).

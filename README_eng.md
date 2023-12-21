@@ -87,14 +87,33 @@ eXplain-NNs Library API is available [here](https://med-ai-lab.github.io/eXplain
 
 
 ## Examples & Tutorials
-We provide tutorials demonstrating suggested usage pipeline:
-* [Visualization](/examples/minimal/Visualization.ipynb)
-* [Homologies](/examples/minimal/Homologies.ipynb)
-* [Bayesianization](/examples/minimal/Bayesianization.ipynb)
+We provides examples of several types:
+* [API demonstration] minimalistic examples showing how to work with our API
+* [use cases] use cases where eXplain-NNs can be used with detailed explanations
+* [industrial applications] examples with application of our library to solving industrial tasks
 
-We also provide examples of application of our library to different tasks:
-* [CIFAR10 classification](/examples/CIFAR10)
-* [casting defect detection](/examples/casting)
+### API Demostration
+Here are colabs demonstrating how to work with different modules of our API:
+| Colab Link | Module |
+| ------------- | ------------- |
+| [![bayes](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Ayd0IronxUIfnbAmWQLHiILG2qtBBpF4?usp=sharing)| bayes |
+| [![topology](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1T5ENfNaCIRI61LM2ZhtU8lfmvRmlfiEo?usp=sharing)| topology |
+| [![visualization](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1LJVdWTv-wcASSMX4is_E15TR7XJsT7W3?usp=sharing)| visualization |
+
+Also more notebooks with examples can be found [here](/examples/)
+
+### Use Cases
+TBD
+
+### Industrial Applications
+This block provides examples how eXplain-NNs can be used to solve industrial tasks. For demonstration purposed 2 tasks are used:
+* [casting] detecting defects of casting materials
+* [CIFAR] natural image classification on CIFAR dataset
+
+| Colab Link | Task | Use Case |
+| ------------- | ------------- | ------------- |
+| [![casting_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/16buElLs1hv0lBP2wglbiM7DLTwdsudcm?usp=sharing)| casting | Visualization of data manifold evolution from layer to layer |
+| [![CIFAR_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/12ZJigH-0geGTefNXnCM5dQ71d4tqlf6L?usp=sharing)| CIFAR | Visualization of data manifold evolution from layer to layer |
 
 ## Contribution Guide
 The contribution guide is available in the [repository](/docs/contribution.md).
