@@ -53,7 +53,7 @@ def test_visualization():
 
 def test_embed_visualization():
     N, dim, data = utils.create_testing_data()
-    labels = np.random.rand(20,2)
+    labels = np.random.rand(20, 2)
     labels = torch.tensor(labels)
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
