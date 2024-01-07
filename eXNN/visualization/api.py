@@ -105,12 +105,14 @@ def visualize_layer_manifolds(
             visualizations[layer] = _plot(reduce_dim(layer_reprs, mode), labels)
         return visualizations
 
+
 def reduce_mode(mode, out_dim, neighbors):
     if mode.lower() == 'umap':
         reduced = umap.UMAP(n_components=out_dim, n_neighbors=neighbors)
     if mode.lower() == 'pca':
         reduced = PCA(n_components=out_dim)
     return reduced
+
 
 def visualize_recurrent_layer_manifolds(
     model: torch.nn.Module,
