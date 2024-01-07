@@ -52,7 +52,8 @@ def test_visualization():
 
 
 def test_embed_visualization():
-    N, dim, data, labels = utils.create_testing_data()
+    N, dim, data = utils.create_testing_data()
+    N2, dim2, labels = utils.create_testing_data()
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
     res = viz_api.visualize_recurrent_layer_manifolds(model, "umap",
