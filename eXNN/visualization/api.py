@@ -27,6 +27,8 @@ def _plot(embedding, labels):
 def reduce_dim(
     data: torch.Tensor,
     mode: str,
+    out_dim=3,
+    neighbors=20,
 ) -> np.ndarray:
     """This function reduces data dimensionality to 2 dimensions.
 
@@ -35,6 +37,8 @@ def reduce_dim(
             where N is the number of data points,
             C1,...,Ck are dimensions of each data point
         mode (str): dimensionality reduction mode (`umap` or `pca`)
+        out_dim (int): dimension of output, 3 by default
+        neighbors (int): n_neighbors of umap method
 
     Raises:
         ValueError: returned if unsupported mode is provided
@@ -45,9 +49,9 @@ def reduce_dim(
 
     data = data.detach().cpu().numpy().reshape((len(data), -1))
     if mode == "pca":
-        return PCA(n_components=2).fit_transform(data)
+        return PCA(n_components=out_dim).fit_transform(data)
     elif mode == "umap":
-        return umap.UMAP().fit_transform(data)
+        return umap.UMAP(n_components=out_dim, n_neighbors=neighbors).fit_transform(data)
     else:
         raise ValueError(f"Unsupported mode: `{mode}`")
 
@@ -104,14 +108,6 @@ def visualize_layer_manifolds(
             layer_reprs = torch.cat(representations[layer], dim=0)
             visualizations[layer] = _plot(reduce_dim(layer_reprs, mode), labels)
         return visualizations
-
-
-def reduce_mode(mode, out_dim, neighbors):
-    if mode.lower() == 'umap':
-        reduced = umap.UMAP(n_components=out_dim, n_neighbors=neighbors)
-    if mode.lower() == 'pca':
-        reduced = PCA(n_components=out_dim)
-    return reduced
 
 
 def visualize_recurrent_layer_manifolds(
@@ -184,8 +180,7 @@ def visualize_recurrent_layer_manifolds(
             emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
                                                                   1, layer_output.shape[1]))
             emb_res = emb_res.reshape(emb_res.shape[0], 1, -1)
-        reduced = reduce_mode(mode=mode, out_dim=out_dim, neighbors=neighbors)
-        reducing_output = reduced.fit_transform(emb_res[:, 0, :])
+        reducing_output = reduce_dim(data=emb_res[:, 0, :], mode=mode, out_dim=out_dim, neighbors=neighbors)
         df = pd.DataFrame(reducing_output)
         if labels.ndim == 1:
             df["category"] = labels.astype(str)
