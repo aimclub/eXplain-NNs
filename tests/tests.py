@@ -71,6 +71,7 @@ def test_embed_visualization():
             f"Wrong value type for key {key}",
         )
 
+
 def _test_bayes_prediction(mode: str):
     params = {"basic": dict(mode="basic", p=0.5), "beta": dict(mode="beta", a=0.9, b=0.2)}
 
