@@ -105,6 +105,12 @@ def visualize_layer_manifolds(
             visualizations[layer] = _plot(reduce_dim(layer_reprs, mode), labels)
         return visualizations
 
+def reduce_mode(mode, out_dim, neighbors):
+    if mode.lower() == 'umap':
+        reduced = umap.UMAP(n_components=out_dim, n_neighbors=neighbors)
+    if mode.lower() == 'pca':
+        reduced = PCA(n_components=out_dim)
+    return reduced
 
 def visualize_recurrent_layer_manifolds(
     model: torch.nn.Module,
@@ -176,12 +182,8 @@ def visualize_recurrent_layer_manifolds(
             emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
                                                                   1, layer_output.shape[1]))
             emb_res = emb_res.reshape(emb_res.shape[0], 1, -1)
-        if mode.lower() == 'umap':
-            umapred = umap.UMAP(n_components=out_dim, n_neighbors=neighbors)
-            reducing_output = umapred.fit_transform(emb_res[:, 0, :])
-        if mode.lower() == 'pca':
-            PCA_out = PCA(n_components=out_dim)
-            reducing_output = PCA_out.fit_transform(emb_res[:, 0, :])
+        reduced = reduce_mode(mode=mode, out_dim=out_dim, neighbors=neighbors)
+        reducing_output = reduced.fit_transform(emb_res[:, 0, :])
         df = pd.DataFrame(reducing_output)
         if labels.ndim == 1:
             df["category"] = labels.astype(str)
