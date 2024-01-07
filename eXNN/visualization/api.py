@@ -167,11 +167,11 @@ def visualize_recurrent_layer_manifolds(
         else:
             stride = stride_mode
         if layer_output.ndim > 2:
-            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim, 
+            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim,
                                        stride=stride)
             emb_res = embedder.fit_transform(layer_output)
         else:
-            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim, 
+            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim,
                                        stride=stride)
             emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
                                                                   1, layer_output.shape[1]))
@@ -193,10 +193,11 @@ def visualize_recurrent_layer_manifolds(
             center = np.zeros((len(np.unique(labels_noncat)), 3))
             med_dist = np.zeros((len(np.unique(labels_noncat)), len(np.unique(labels_noncat))))
             for i in range(len(np.unique(labels_noncat))):
-                center[i] = np.mean(reducing_output[np.where(labels_noncat == np.unique(labels_noncat)[i])], axis=0)
+                center[i] = np.mean(reducing_output[np.where(labels_noncat == np.unique(
+                    labels_noncat)[i])], axis=0)
                 for j in range(len(np.unique(labels_noncat))):
                     med_dist[i][j] = math.log(np.square(1 / np.mean(reducing_output[np.where(
-                        labels_noncat==np.unique(labels_noncat)[j])] - center[i])))
+                        labels_noncat == np.unique(labels_noncat)[j])] - center[i])))
         emb_out = px.scatter_3d(df, x=0, y=1, z=2, color="category")
         emb_out.update_traces(marker=dict(size=4))
         emb_out.update_layout(
