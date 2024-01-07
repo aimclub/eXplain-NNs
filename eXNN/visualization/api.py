@@ -161,6 +161,7 @@ def visualize_recurrent_layer_manifolds(
     """
     model2 = create_feature_extractor(model, return_nodes=layers)
     labels = labels.detach().numpy()
+    emb_viz = {}
     for layer in layers:
         if torch.is_tensor(model2(data)[layer]):
             layer_output = model2(data)[layer].cpu().detach().numpy()
@@ -206,6 +207,7 @@ def visualize_recurrent_layer_manifolds(
             width=1000,
             height=1000)
         emb_out.show(renderer="colab")
+        emb_viz[layer] = emb_out
 
 
 def get_random_input(dims: List[int]) -> torch.Tensor:
