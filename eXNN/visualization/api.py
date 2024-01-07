@@ -180,7 +180,8 @@ def visualize_recurrent_layer_manifolds(
             emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
                                                                   1, layer_output.shape[1]))
             emb_res = emb_res.reshape(emb_res.shape[0], 1, -1)
-        reducing_output = reduce_dim(data=emb_res[:, 0, :], mode=mode, out_dim=out_dim, neighbors=neighbors)
+        reducing_output = reduce_dim(data=emb_res[:, 0, :], mode=mode,
+                                     out_dim=out_dim, neighbors=neighbors)
         df = pd.DataFrame(reducing_output)
         if labels.ndim == 1:
             df["category"] = labels.astype(str)
