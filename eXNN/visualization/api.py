@@ -167,10 +167,12 @@ def visualize_recurrent_layer_manifolds(
         else:
             stride = stride_mode
         if layer_output.ndim > 2:
-            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim, stride=stride)
+            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim, 
+                                       stride=stride)
             emb_res = embedder.fit_transform(layer_output)
         else:
-            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim, stride=stride)
+            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim, 
+                                       stride=stride)
             emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
                                                                   1, layer_output.shape[1]))
             emb_res = emb_res.reshape(emb_res.shape[0], 1, -1)
@@ -186,16 +188,15 @@ def visualize_recurrent_layer_manifolds(
         else:
             df["category"] = np.where(labels == 1)[1].astype(str)
         df = df.iloc[::arr_reducer, :]
-        if heatmap == True:
+        if heatmap is True:
             labels_noncat = labels
-            print(labels_noncat.shape, labels_noncat[0])
             center = np.zeros((len(np.unique(labels_noncat)), 3))
             med_dist = np.zeros((len(np.unique(labels_noncat)), len(np.unique(labels_noncat))))
-        for i in range(len(np.unique(labels_noncat))):
-            center[i] = np.mean(reducing_output[np.where(labels_noncat==np.unique(labels_noncat)[i])], axis=0)
-            for j in range(len(np.unique(labels_noncat))):
-                med_dist[i][j] = math.log(np.square(1/np.mean(reducing_output[np.where(
-                    labels_noncat==np.unique(labels_noncat)[j])] - center[i])))
+            for i in range(len(np.unique(labels_noncat))):
+                center[i] = np.mean(reducing_output[np.where(labels_noncat == np.unique(labels_noncat)[i])], axis=0)
+                for j in range(len(np.unique(labels_noncat))):
+                    med_dist[i][j] = math.log(np.square(1 / np.mean(reducing_output[np.where(
+                        labels_noncat==np.unique(labels_noncat)[j])] - center[i])))
         emb_out = px.scatter_3d(df, x=0, y=1, z=2, color="category")
         emb_out.update_traces(marker=dict(size=4))
         emb_out.update_layout(
