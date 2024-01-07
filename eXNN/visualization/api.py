@@ -113,9 +113,11 @@ def visualize_recurrent_layer_manifolds(
     neighbors=20,
     time_delay=1,
     embedding_dim=10,
-    stride_mode="dimensional",
+    stride_mode='dimensional',
     out_dim=3,
-    renderer="browser",
+    arr_reducer=1,
+    renderer='browser',
+    heatmap: Optional[str] = True,
     layers: Optional[List[str]] = None,
     labels: Optional[torch.Tensor] = None,
     chunk_size: Optional[int] = None,
@@ -134,6 +136,7 @@ def visualize_recurrent_layer_manifolds(
         stride_mode ('dimensional' or str): stride duration between two consecutive embedded points,
             'dimensional' makes 'stride' equal to layer dimension
         out_dim (int): dimension of output, 3 by default
+        arr_reducer (int): strips the output array of some data, leaving only each n_th
         renderer (str): plotly renderer for image,
             Available renderers:
                 ['plotly_mimetype', 'jupyterlab', 'nteract', 'vscode',
@@ -164,25 +167,35 @@ def visualize_recurrent_layer_manifolds(
         else:
             stride = stride_mode
         if layer_output.ndim > 2:
-            embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
+            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim, stride=stride)
             emb_res = embedder.fit_transform(layer_output)
         else:
-            embedder = TakensEmbedding(time_delay=time_delay, dimension=10, stride=stride)
+            embedder = TakensEmbedding(time_delay=time_delay, dimension=embedding_dim, stride=stride)
             emb_res = embedder.fit_transform(layer_output.reshape(layer_output.shape[0],
                                                                   1, layer_output.shape[1]))
             emb_res = emb_res.reshape(emb_res.shape[0], 1, -1)
         if mode.lower() == 'umap':
-            umapred = umap.UMAP(n_components=3, n_neighbors=neighbors)
+            umapred = umap.UMAP(n_components=out_dim, n_neighbors=neighbors)
             reducing_output = umapred.fit_transform(emb_res[:, 0, :])
         if mode.lower() == 'pca':
-            PCA_out = PCA(n_components=3)
+            PCA_out = PCA(n_components=out_dim)
             reducing_output = PCA_out.fit_transform(emb_res[:, 0, :])
         df = pd.DataFrame(reducing_output)
-        if labels.shape[1] == 1:
+        if labels.ndim == 1:
             df["category"] = labels.astype(str)
         else:
             df["category"] = np.where(labels == 1)[1].astype(str)
-        # df = df.iloc[::4, :]
+        df = df.iloc[::arr_reducer, :]
+        if heatmap == True:
+            labels_noncat = labels
+            print(labels_noncat.shape, labels_noncat[0])
+            center = np.zeros((len(np.unique(labels_noncat)), 3))
+            med_dist = np.zeros((len(np.unique(labels_noncat)), len(np.unique(labels_noncat))))
+        for i in range(len(np.unique(labels_noncat))):
+            center[i] = np.mean(reducing_output[np.where(labels_noncat==np.unique(labels_noncat)[i])], axis=0)
+            for j in range(len(np.unique(labels_noncat))):
+                med_dist[i][j] = math.log(np.square(1/np.mean(reducing_output[np.where(
+                    labels_noncat==np.unique(labels_noncat)[j])] - center[i])))
         emb_out = px.scatter_3d(df, x=0, y=1, z=2, color="category")
         emb_out.update_traces(marker=dict(size=4))
         emb_out.update_layout(
