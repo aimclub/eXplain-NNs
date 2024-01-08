@@ -1,1 +1,1 @@
-from .api import DropoutBayesianWrapper, DropoutGaussianWrapper
+from .api import DropoutBayesianWrapper, GaussianBayesianWrapper
