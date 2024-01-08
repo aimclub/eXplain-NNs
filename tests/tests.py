@@ -54,8 +54,8 @@ def test_visualization():
 def test_embed_visualization():
     data = np.random.rand(20, 1, 256)
     labels = np.random.rand(20, 2)
-    data = torch.from_numpy(data)
-    labels = torch.from_numpy(labels)
+    data = torch.from_numpy(data, dtype=torch.double)
+    labels = torch.from_numpy(labels, dtype=torch.double)
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
     res = viz_api.visualize_recurrent_layer_manifolds(model, "umap",
