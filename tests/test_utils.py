@@ -21,13 +21,13 @@ def create_testing_data():
     return N, dim, data
 
 
-def create_testing_model():
+def create_testing_model(num_classes=10):
     return nn.Sequential(
         OrderedDict(
             [
                 ("first_layer", nn.Linear(256, 128)),
                 ("second_layer", nn.Linear(128, 64)),
-                ("third_layer", nn.Linear(64, 10)),
+                ("third_layer", nn.Linear(64, num_classes)),
             ],
         ),
     )
