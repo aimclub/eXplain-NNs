@@ -110,12 +110,13 @@ This block provides examples how eXplain-NNs can be used to solve different use 
 * [satellite] landscape classification from satellite imagery
 * [electronics] electronic components and devices classification
 * [ECG] ECG diagnostics
+* 
 
 | Colab Link | Task | Use Case |
 | ------------- | ------------- | ------------- |
 | [![CNN_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/12ZJigH-0geGTefNXnCM5dQ71d4tqlf6L?usp=sharing)| satellite | Visualization of data manifold evolution from layer to layer |
-| TBD | satellite | Detecting adversarial examples |
-| TBD | electronics | Estimating generalization of a NN |
+| [![adv](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1n50WUu2ZKZ6nrT9DuFD3q87m3yZvxkwm?usp=sharing) | satellite | Detecting adversarial examples |
+| [![generalize](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mG-VrP7J7OoCvIQDl7n5YWEIdyfFg_0I?usp=sharing) | electronics | Estimating generalization of a NN |
 | TBD | ECG | Visualization of data manifold evolution from layer to layer |
 
 ## Contribution Guide
