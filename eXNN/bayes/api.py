@@ -59,7 +59,7 @@ class DropoutGaussianWrapper:
             model (torch.nn.Module): neural network
             sigma (float): std of parameters gaussian noise
         """
-        self.model = create_dropout_bayesian_wrapper(model, "gaussian", sigma = sigma)
+        self.model = create_dropout_bayesian_wrapper(model, "gaussian", sigma=sigma)
 
     def predict(self, data, n_iter) -> Dict[str, torch.Tensor]:
         """Function computes mean and standard deviation of bayesian equivalent

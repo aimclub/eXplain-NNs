@@ -19,11 +19,12 @@ class ModuleBayesianWrapper(nn.Module):
         super(ModuleBayesianWrapper, self).__init__()
 
         # Variables correctness checks
-        pab_check = "You can either specify the following options (exclusively):\n - p (simple dropout)\n - a and b (beta dropout)\n - sigma (gaussian dropout)"
+        pab_check = "You can either specify the following options (exclusively):\n\
+              - p (simple dropout)\n - a and b (beta dropout)\n - sigma (gaussian dropout)"
         assert (p is not None and a is None and b is None and sigma is None) or \
                (p is None and a is not None and b is not None and sigma is None) or \
                (p is None and a is None and b is None and sigma is not None), pab_check
-        
+
         if (p is None) and (sigma is None):
             ab_check = "If you choose to specify a and b, you must to specify both"
             assert (self.a is not None) and (self.b is not None), ab_check
@@ -34,7 +35,6 @@ class ModuleBayesianWrapper(nn.Module):
         if type(layer) in [nn.Linear, nn.Conv1d, nn.Conv2d, nn.Conv3d]:
             self.p, self.a, self.b, self.sigma = p, a, b, sigma
 
-
     def augment_weights(self, weights, bias):
 
         # Check if dropout is chosen
@@ -44,14 +44,14 @@ class ModuleBayesianWrapper(nn.Module):
                 p = self.p
             else:
                 p = Beta(torch.tensor(self.a), torch.tensor(self.b)).sample()
-        
+
             weights = F.dropout(weights, p, training=True)
             bias = F.dropout(bias, p, training=True)
 
         else:
             # If gauss is chosen, then apply it
-            weights = weights + (torch.randn(*weights.shape)*self.sigma).to(weights.device())
-            bias = bias + (torch.randn(*bias.shape)*self.sigma).to(bias.device())
+            weights = weights + (torch.randn(*weights.shape) * self.sigma).to(weights.device())
+            bias = bias + (torch.randn(*bias.shape) * self.sigma).to(bias.device())
 
         return weights, bias
 
@@ -152,7 +152,7 @@ class NetworkBayesBeta(nn.Module):
             dim=0,
         )
         return results
-    
+
 
 class NetworkBayesGauss(nn.Module):
     def __init__(
