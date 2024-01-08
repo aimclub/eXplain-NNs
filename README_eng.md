@@ -87,14 +87,36 @@ eXplain-NNs Library API is available [here](https://med-ai-lab.github.io/eXplain
 
 
 ## Examples & Tutorials
-We provide tutorials demonstrating suggested usage pipeline:
-* [Visualization](/examples/minimal/Visualization.ipynb)
-* [Homologies](/examples/minimal/Homologies.ipynb)
-* [Bayesianization](/examples/minimal/Bayesianization.ipynb)
+We provides examples of different levels of complexity:
+* [minimal] minimalistic examples presenting our API
+* [basic] applying eXNN to simple tasks like MNIST classification
+* [use cases] demonstation of eXplain-NN usage for solving different use cases in industrial tasks
 
-We also provide examples of application of our library to different tasks:
-* [CIFAR10 classification](/examples/CIFAR10)
-* [casting defect detection](/examples/casting)
+### Minimal
+This colab contains minimalistic demonstration of our API on dummy objects:
+
+[![minimal](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lOiB50LppDiiRHTv184JMuQ2IvZ4I4rp?usp=sharing)
+
+### Basic
+Here are colabs demonstrating how to work with different modules of our API on simple tasks:
+| Colab Link | Module |
+| ------------- | ------------- |
+| [![bayes](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Ayd0IronxUIfnbAmWQLHiILG2qtBBpF4?usp=sharing)| bayes |
+| [![topology](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1T5ENfNaCIRI61LM2ZhtU8lfmvRmlfiEo?usp=sharing)| topology |
+| [![visualization](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1LJVdWTv-wcASSMX4is_E15TR7XJsT7W3?usp=sharing)| visualization |
+
+### Use Cases
+This block provides examples how eXplain-NNs can be used to solve different use cases in industrial tasks. For demonstration purposed 3 tasks are used:
+* [satellite] landscape classification from satellite imagery
+* [electronics] electronic components and devices classification
+* [ECG] ECG diagnostics
+
+| Colab Link | Task | Use Case |
+| ------------- | ------------- | ------------- |
+| [![CNN_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/12ZJigH-0geGTefNXnCM5dQ71d4tqlf6L?usp=sharing)| satellite | Visualization of data manifold evolution from layer to layer |
+| TBD | satellite | Detecting adversarial examples |
+| TBD | electronics | Estimating generalization of a NN |
+| TBD | ECG | Visualization of data manifold evolution from layer to layer |
 
 ## Contribution Guide
 The contribution guide is available in the [repository](/docs/contribution.md).

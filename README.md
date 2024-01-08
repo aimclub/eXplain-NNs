@@ -87,14 +87,37 @@
 
 
 ## Примеры и тьюториалы
-Примеры использования API библиотеки:
-* [Визуализация](/examples/minimal/Visualization.ipynb)
-* [Гомологии](/examples/minimal/Homologies.ipynb)
-* [Байесианизация](/examples/minimal/Bayesianization.ipynb)
+Мы предоставляем примеры разного уровня сложности:
+* [минимальные] минималистичные примеры, представляющие наш API
+* [базовые] применение eXNN для простых задач, таких как классификация MNIST
+* [сценарии использования] демонстрация использования eXplain-NN для решения различных проблем, возникающих в промышленных задачах.
 
-Примеры использования библиотеки для индустриальных задач:
-* [CIFAR10 classification](/examples/CIFAR10)
-* [casting defect detection](/examples/casting)
+### Минимальные
+Этот колаб содержит минималистическую демонстрацию нашего API на фиктивных объектах:
+
+[![minimal](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lOiB50LppDiiRHTv184JMuQ2IvZ4I4rp?usp=sharing)
+
+### Базовые
+Вот колабы, демонстрирующие, как работать с разными модулями нашего API на простых задачах:
+
+| Colab Link | Module |
+| ------------- | ------------- |
+| [![bayes](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Ayd0IronxUIfnbAmWQLHiILG2qtBBpF4?usp=sharing)| bayes |
+| [![topology](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1T5ENfNaCIRI61LM2ZhtU8lfmvRmlfiEo?usp=sharing)| topology |
+| [![visualization](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1LJVdWTv-wcASSMX4is_E15TR7XJsT7W3?usp=sharing)| visualization |
+
+### Сценарии использования
+В этом блоке представлены примеры использования eXplain-NN для решения различных вариантов использования в промышленных задачах. Для демонстрационных целей используются 3 задачи:
+* [спутник] классификация ландшафтов по спутниковым снимкам.
+* [электроника] классификация электронных компонентов и устройств
+* [ЭКГ] диагностика ЭКГ
+
+| Colab Link | Task | Use Case |
+| ------------- | ------------- | ------------- |
+| [![CNN_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/12ZJigH-0geGTefNXnCM5dQ71d4tqlf6L?usp=sharing)| спутник | Визуализация изменения многообразия данных от слоя к слою |
+| TBD | спутник | Детекция adversarial данных |
+| TBD | электроника | Оценка обобщающей способности нейронной сети |
+| TBD | ЭКГ | Визуализация изменения многообразия данных от слоя к слою |
 
 ## Как помочь проекту
 [Инструкции](/docs/contribution.md).
