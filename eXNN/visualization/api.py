@@ -180,7 +180,8 @@ def visualize_recurrent_layer_manifolds(
     emb_out.update_layout(
         autosize=False,
         width=1000,
-        height=1000)
+        height=1000,
+    )
     emb_out.show(renderer="colab")
 
 

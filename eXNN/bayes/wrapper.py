@@ -14,7 +14,7 @@ class ModuleBayesianWrapper(nn.Module):
         p: Optional[float] = None,
         a: Optional[float] = None,
         b: Optional[float] = None,
-        sigma: Optional[float] = None
+        sigma: Optional[float] = None,
     ):
         super(ModuleBayesianWrapper, self).__init__()
 
@@ -26,8 +26,8 @@ class ModuleBayesianWrapper(nn.Module):
                (p is None and a is None and b is None and sigma is not None), pab_check
 
         if (p is None) and (sigma is None):
-            ab_check = "If you choose to specify a and b, you must to specify both"
-            assert (self.a is not None) and (self.b is not None), ab_check
+            ab_check = "If you choose to specify a and b, you must specify both"
+            assert (a is not None) and (b is not None), ab_check
 
         # At the moment we are only modifying linear and convolutional layers, so check this
         self.layer = layer
@@ -50,8 +50,8 @@ class ModuleBayesianWrapper(nn.Module):
 
         else:
             # If gauss is chosen, then apply it
-            weights = weights + (torch.randn(*weights.shape) * self.sigma).to(weights.device())
-            bias = bias + (torch.randn(*bias.shape) * self.sigma).to(bias.device())
+            weights = weights + (torch.randn(*weights.shape) * self.sigma).to(weights.device)
+            bias = bias + (torch.randn(*bias.shape) * self.sigma).to(bias.device)
 
         return weights, bias
 
@@ -92,9 +92,11 @@ class NetworkBayes(nn.Module):
 
         super(NetworkBayes, self).__init__()
         self.model = copy.deepcopy(model)
-        self.model = replace_modules_with_wrapper(self.model,
-                                                  ModuleBayesianWrapper,
-                                                  {"p": dropout_p})
+        self.model = replace_modules_with_wrapper(
+            self.model,
+            ModuleBayesianWrapper,
+            {"p": dropout_p},
+        )
 
     def mean_forward(
         self,
@@ -128,9 +130,11 @@ class NetworkBayesBeta(nn.Module):
 
         super(NetworkBayesBeta, self).__init__()
         self.model = copy.deepcopy(model)
-        self.model = replace_modules_with_wrapper(self.model,
-                                                  ModuleBayesianWrapper,
-                                                  {"a": alpha, "b": beta})
+        self.model = replace_modules_with_wrapper(
+            self.model,
+            ModuleBayesianWrapper,
+            {"a": alpha, "b": beta},
+        )
 
     def mean_forward(
         self,
@@ -158,14 +162,16 @@ class NetworkBayesGauss(nn.Module):
     def __init__(
         self,
         model: torch.nn.Module,
-        sigma: float
+        sigma: float,
     ):
 
         super(NetworkBayesGauss, self).__init__()
         self.model = copy.deepcopy(model)
-        self.model = replace_modules_with_wrapper(self.model,
-                                                  ModuleBayesianWrapper,
-                                                  {"sigma": sigma})
+        self.model = replace_modules_with_wrapper(
+            self.model,
+            ModuleBayesianWrapper,
+            {"sigma": sigma},
+        )
 
     def mean_forward(
         self,
@@ -195,7 +201,7 @@ def create_dropout_bayesian_wrapper(
     p: Optional[float] = None,
     a: Optional[float] = None,
     b: Optional[float] = None,
-    sigma: Optional[float] = None
+    sigma: Optional[float] = None,
 ) -> torch.nn.Module:
     if mode == "basic":
         net = NetworkBayes(model, p)
