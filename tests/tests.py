@@ -52,7 +52,7 @@ def test_visualization():
 
 
 def _test_bayes_prediction(mode: str):
-    params = {"basic": dict(mode="basic", p=0.5), "beta": dict(mode="beta", a=0.9, b=0.2)}
+    params = {"basic": dict(mode="basic", p=0.5), "beta": dict(mode="beta", a=0.9, b=0.2), "gauss": dict(mode="gauss", sigma = 1e-2)}
 
     N, dim, data = utils.create_testing_data()
     model = utils.create_testing_model()
@@ -73,6 +73,8 @@ def test_basic_bayes_wrapper():
 def test_beta_bayes_wrapper():
     _test_bayes_prediction("beta")
 
+def test_gauss_bayes_wrapper():
+    _test_bayes_prediction("gauss")
 
 def test_data_barcode():
     N, dim, data = utils.create_testing_data()
