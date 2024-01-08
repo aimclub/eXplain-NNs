@@ -59,7 +59,10 @@ def _test_bayes_prediction(mode: str):
     N, dim, data = utils.create_testing_data()
     model = utils.create_testing_model()
     n_iter = 10
-    res = bayes_api.DropoutBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
+    if mode != 'gauss':
+        res = bayes_api.DropoutBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
+    else:
+        res = bayes_api.DropoutGaussianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
 
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(2, len(res), "Wrong dictionary length")
