@@ -47,7 +47,7 @@ class DropoutBayesianWrapper:
         return {"mean": res[0], "std": res[1]}
 
 
-class DropoutGaussianWrapper:
+class GaussianBayesianWrapper:
     def __init__(
         self,
         model: torch.nn.Module,

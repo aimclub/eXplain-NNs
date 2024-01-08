@@ -46,12 +46,16 @@ class ModuleBayesianWrapper(nn.Module):
                 p = Beta(torch.tensor(self.a), torch.tensor(self.b)).sample()
 
             weights = F.dropout(weights, p, training=True)
-            bias = F.dropout(bias, p, training=True)
+            if bias is not None:
+                # In layers we sometimes have the ability to set bias to None
+                bias = F.dropout(bias, p, training=True)
 
         else:
             # If gauss is chosen, then apply it
             weights = weights + (torch.randn(*weights.shape) * self.sigma).to(weights.device)
-            bias = bias + (torch.randn(*bias.shape) * self.sigma).to(bias.device)
+            if bias is not None:
+                # In layers we sometimes have the ability to set bias to None
+                bias = bias + (torch.randn(*bias.shape) * self.sigma).to(bias.device)
 
         return weights, bias
 
