@@ -65,7 +65,8 @@ def _test_bayes_prediction(mode: str):
     if mode != 'gauss':
         res = bayes_api.DropoutBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
     else:
-        res = bayes_api.GaussianBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
+        res = bayes_api.GaussianBayesianWrapper(model, **(params[mode])).predict(data,
+                                                                                 n_iter=n_iter)
 
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(2, len(res), "Wrong dictionary length")
