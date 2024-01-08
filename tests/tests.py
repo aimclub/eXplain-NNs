@@ -52,7 +52,7 @@ def test_visualization():
 
 
 def test_embed_visualization():
-    data = np.random.rand(20, 1, 128)
+    data = np.random.rand(20, 1, 256)
     labels = np.random.rand(20, 2)
     data = torch.from_numpy(data)
     labels = torch.from_numpy(labels)
