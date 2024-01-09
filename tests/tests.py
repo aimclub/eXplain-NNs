@@ -1,6 +1,7 @@
 import matplotlib
 import numpy as np
 import torch
+import plotly
 
 import eXNN.bayes as bayes_api
 import eXNN.topology as topology_api
