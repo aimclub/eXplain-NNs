@@ -1,5 +1,6 @@
 import matplotlib
 import numpy as np
+import plotly
 import torch
 
 import eXNN.bayes as bayes_api
