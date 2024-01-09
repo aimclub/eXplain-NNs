@@ -110,7 +110,6 @@ This block provides examples how eXplain-NNs can be used to solve different use 
 * [satellite] landscape classification from satellite imagery
 * [electronics] electronic components and devices classification
 * [ECG] ECG diagnostics
-* 
 
 | Colab Link | Task | Use Case |
 | ------------- | ------------- | ------------- |
