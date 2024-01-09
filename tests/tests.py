@@ -52,8 +52,8 @@ def test_visualization():
 
 
 def test_embed_visualization():
-    data = np.asarray(np.random.rand(20, 1, 256), dtype=np.double)
-    labels = np.asarray(np.random.rand(20), dtype=np.double)
+    data = torch.randn((20, 1, 256))
+    labels = torch.randn((20))
     data = torch.from_numpy(data)
     labels = torch.from_numpy(labels)
     model = utils.create_testing_model()
