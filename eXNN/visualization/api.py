@@ -208,8 +208,7 @@ def visualize_recurrent_layer_manifolds(
             autosize=False,
             width=1000,
             height=1000)
-        # emb_viz[layer] = emb_out
-    # return emb_viz
+        emb_out.show(renderer="colab")
 
 
 def get_random_input(dims: List[int]) -> torch.Tensor:
