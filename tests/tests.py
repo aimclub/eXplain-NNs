@@ -33,7 +33,7 @@ def test_reduce_dim_pca():
 
 def test_visualization():
     N, dim, data = utils.create_testing_data()
-    model = utils.create_testing_model_lstm()
+    model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
     res = viz_api.visualize_layer_manifolds(model, "umap", data, layers=layers)
 
@@ -55,7 +55,7 @@ def test_visualization():
 def test_embed_visualization():
     data = torch.randn((20, 1, 256))
     labels = torch.randn((20))
-    model = utils.create_testing_model()
+    model = utils.create_testing_model_lstm()
     layers = ["second_layer", "third_layer"]
     res = viz_api.visualize_recurrent_layer_manifolds(model, "umap",
                                                       data, layers=layers, labels=labels)
