@@ -108,7 +108,7 @@ def visualize_layer_manifolds(
             layer_reprs = torch.cat(representations[layer], dim=0)
             visualizations[layer] = _plot(reduce_dim(layer_reprs, mode), labels)
         return visualizations
-        
+
 
 def visualize_recurrent_layer_manifolds(
     model: torch.nn.Module,
@@ -208,7 +208,9 @@ def visualize_recurrent_layer_manifolds(
             autosize=False,
             width=1000,
             height=1000)
-        emb_out.show(renderer="colab")
+        emb_out.close()
+        emb_viz[layer] = emb_out
+    return emb_viz
 
 
 def get_random_input(dims: List[int]) -> torch.Tensor:
