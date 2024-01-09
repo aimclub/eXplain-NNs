@@ -32,7 +32,7 @@ def test_reduce_dim_pca():
 
 def test_visualization():
     N, dim, data = utils.create_testing_data()
-    model = utils.create_testing_model_LSTM()
+    model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
     res = viz_api.visualize_layer_manifolds(model, "umap", data, layers=layers)
 
@@ -46,6 +46,28 @@ def test_visualization():
     for key, plot in res.items():
         utils.compare_values(
             matplotlib.figure.Figure,
+            type(plot),
+            f"Wrong value type for key {key}",
+        )
+
+
+def test_embed_visualization():
+    data = torch.randn((20, 1, 256))
+    labels = torch.randn((20))
+    model = utils.create_testing_model()
+    layers = ["second_layer", "third_layer"]
+    res = viz_api.visualize_recurrent_layer_manifolds(model, "umap",
+                                                      data, layers=layers, labels=labels)
+    utils.compare_values(dict, type(res), "Wrong result type")
+    utils.compare_values(2, len(res), "Wrong dictionary length")
+    utils.compare_values(
+        set(layers),
+        set(res.keys()),
+        "Wrong dictionary keys",
+    )
+    for key, plot in res.items():
+        utils.compare_values(
+            plotly.graph_objs.Figure,
             type(plot),
             f"Wrong value type for key {key}",
         )
