@@ -34,7 +34,7 @@ def create_testing_model(num_classes=10):
 
 
 class extract_tensor(nn.Module):
-    def forward(self,x):
+    def forward(self, x):
         tensor, _ = x
         x = x.to(torch.float32)
         return tensor[:, :]
