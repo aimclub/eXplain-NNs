@@ -33,7 +33,7 @@ def create_testing_model(num_classes=10):
     )
 
 
-class Extract_Tensor(nn.Module):
+class ExtractTensor(nn.Module):
     def forward(self, x):
         tensor, _ = x
         x = x.to(torch.float32)
@@ -45,7 +45,7 @@ def create_testing_model_lstm(num_classes=10):
         OrderedDict(
             [
                 ('first_layer', nn.LSTM(256, 128, 1, batch_first=True)),
-                ('extract', extract_tensor()),
+                ('extract', ExtractTensor()),
                 ('second_layer', nn.Linear(128, 64)),
                 ('third_layer', nn.Linear(64, num_classes)),
             ],
