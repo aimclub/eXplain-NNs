@@ -108,7 +108,7 @@ def visualize_layer_manifolds(
             layer_reprs = torch.cat(representations[layer], dim=0)
             visualizations[layer] = _plot(reduce_dim(layer_reprs, mode), labels)
         return visualizations
-
+        
 
 def visualize_recurrent_layer_manifolds(
     model: torch.nn.Module,
