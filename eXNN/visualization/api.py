@@ -209,7 +209,6 @@ def visualize_recurrent_layer_manifolds(
             width=1000,
             height=1000)
         emb_viz[layer] = emb_out
-        emb_out.show()
     return emb_viz
 
 
