@@ -32,11 +32,13 @@ def create_testing_model(num_classes=10):
         ),
     )
 
+
 class extract_tensor(nn.Module):
     def forward(self,x):
         tensor, _ = x
         x = x.to(torch.float32)
         return tensor[:, :]
+
 
 def create_testing_model_LSTM(num_classes=10):
     return nn.Sequential(
