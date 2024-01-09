@@ -192,7 +192,7 @@ def visualize_recurrent_layer_manifolds(
         df = df.iloc[::arr_reducer, :]
         if heatmap is True:
             labels_noncat = labels
-            if labels.dim() > 1 and labels.shape[labels.dim() - 1] > 1:
+            if labels.ndim  > 1 and labels.shape[labels.ndim - 1] > 1:
                 labels_noncat = np.argmax(labels_noncat, axis=1)
             center = np.zeros((len(np.unique(labels_noncat)), 3))
             med_dist = np.zeros((len(np.unique(labels_noncat)), len(np.unique(labels_noncat))))
