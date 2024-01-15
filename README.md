@@ -117,7 +117,7 @@
 | [![CNN_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/12ZJigH-0geGTefNXnCM5dQ71d4tqlf6L?usp=sharing)| спутник | Визуализация изменения многообразия данных от слоя к слою |
 | [![adv](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1n50WUu2ZKZ6nrT9DuFD3q87m3yZvxkwm?usp=sharing) | спутник | Детекция adversarial данных |
 | [![generalize](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mG-VrP7J7OoCvIQDl7n5YWEIdyfFg_0I?usp=sharing) | электроника | Оценка обобщающей способности нейронной сети |
-| TBD | ЭКГ | Визуализация изменения многообразия данных от слоя к слою |
+| [![RNN_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1aAtqxQLcOsSJJumfsmS9HGLgHrOFHlfk?usp=sharing) | ЭКГ | Визуализация изменения многообразия данных от слоя к слою |
 
 ## Как помочь проекту
 [Инструкции](/docs/contribution.md).
