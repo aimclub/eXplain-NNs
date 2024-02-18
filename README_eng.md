@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/docs/banner.png" width="500">
+    <img src="/docs/banner.png">
 </p>
 
 [![SAI](https://github.com/ITMO-NSS-team/open-source-ops/blob/master/badges/SAI_badge_flat.svg)](https://sai.itmo.ru/)
