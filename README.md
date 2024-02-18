@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/docs/logo.png" width="500">
+    <img src="/docs/banner.png">
 </p>
 
 [![SAI](https://github.com/ITMO-NSS-team/open-source-ops/blob/master/badges/SAI_badge_flat.svg)](https://sai.itmo.ru/)
@@ -47,6 +47,8 @@
     ```
     $ python -m pip install git+ssh://git@github.com/Med-AI-Lab/eXplain-NNs
     ```
+
+Видео с процессом установки можно посмотреть [здесь](https://drive.google.com/file/d/1Sv8UiRwWfMLJ0kOSYHB_PgILHzNcqfs0/view?usp=sharing).
 
 
 ## Development
