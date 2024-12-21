@@ -31,7 +31,7 @@ def test_reduce_dim_pca():
     _check_reduce_dim("pca")
 
 
-def test_visualization():
+def test_visualization_fcn():
     data = utils.create_testing_data()
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
@@ -39,6 +39,26 @@ def test_visualization():
 
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(3, len(res), "Wrong dictionary length")
+    utils.compare_values(
+        set(["input"] + layers),
+        set(res.keys()),
+        "Wrong dictionary keys",
+    )
+    for key, plot in res.items():
+        utils.compare_values(
+            matplotlib.figure.Figure,
+            type(plot),
+            f"Wrong value type for key {key}",
+        )
+
+def test_visualization_cnn():
+    data = utils.create_testing_data(architecture='cnn')
+    model = utils.create_testing_model(architecture='cnn')
+    layers = ["first_layer", "second_layer", "avgpool", "flatten", "fc"]
+    res = viz_api.visualize_layer_manifolds(model, "umap", data, layers=layers)
+
+    utils.compare_values(dict, type(res), "Wrong result type")
+    utils.compare_values(6, len(res), "Wrong dictionary length")
     utils.compare_values(
         set(["input"] + layers),
         set(res.keys()),
