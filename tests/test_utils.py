@@ -14,11 +14,10 @@ def compare_values(expected, got, message_header=None):
     ), f"{_form_message_header(message_header)}: expected {expected}, got {got}"
 
 
-def create_testing_data():
-    N = 20
-    dim = 256
-    data = torch.randn((N, dim))
-    return N, dim, data
+def create_testing_data(architecture='fcn'):
+    architecture = architecture.lower()
+    if architecture == 'fcn':
+        return torch.randn((20, 256))
 
 
 def create_testing_model(architecture='fcn', num_classes=10):

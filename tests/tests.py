@@ -17,10 +17,10 @@ def test_check_random_input():
 
 
 def _check_reduce_dim(mode):
-    N, dim, data = utils.create_testing_data()
+    data = utils.create_testing_data()
     reduced_data = viz_api.reduce_dim(data, mode)
     utils.compare_values(np.ndarray, type(reduced_data), "Wrong result type")
-    utils.compare_values((N, 2), reduced_data.shape, "Wrong result shape")
+    utils.compare_values((len(data), 2), reduced_data.shape, "Wrong result shape")
 
 
 def test_reduce_dim_umap():
@@ -32,7 +32,7 @@ def test_reduce_dim_pca():
 
 
 def test_visualization():
-    N, dim, data = utils.create_testing_data()
+    data = utils.create_testing_data()
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
     res = viz_api.visualize_layer_manifolds(model, "umap", data, layers=layers)
@@ -81,7 +81,7 @@ def _test_bayes_prediction(mode: str):
         "gauss": dict(sigma=1e-2),
     }
 
-    N, dim, data = utils.create_testing_data()
+    data = utils.create_testing_data()
     num_classes = 17
     model = utils.create_testing_model(num_classes=num_classes)
     n_iter = 7
@@ -94,8 +94,8 @@ def _test_bayes_prediction(mode: str):
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(2, len(res), "Wrong dictionary length")
     utils.compare_values(set(["mean", "std"]), set(res.keys()), "Wrong dictionary keys")
-    utils.compare_values(torch.Size([N, num_classes]), res["mean"].shape, "Wrong mean shape")
-    utils.compare_values(torch.Size([N, num_classes]), res["std"].shape, "Wrong mean std")
+    utils.compare_values(torch.Size([len(data), num_classes]), res["mean"].shape, "Wrong mean shape")
+    utils.compare_values(torch.Size([len(data), num_classes]), res["std"].shape, "Wrong mean std")
 
 
 def test_basic_bayes_wrapper():
@@ -111,13 +111,13 @@ def test_gauss_bayes_wrapper():
 
 
 def test_data_barcode():
-    N, dim, data = utils.create_testing_data()
+    data = utils.create_testing_data()
     res = topology_api.get_data_barcode(data, "standard", "3")
     utils.compare_values(dict, type(res), "Wrong result type")
 
 
 def test_nn_barcodes():
-    N, dim, data = utils.create_testing_data()
+    data = utils.create_testing_data()
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
     res = topology_api.get_nn_barcodes(model, data, layers, "standard", "3")
@@ -133,14 +133,14 @@ def test_nn_barcodes():
 
 
 def test_barcode_plot():
-    N, dim, data = utils.create_testing_data()
+    data = utils.create_testing_data()
     barcode = topology_api.get_data_barcode(data, "standard", "3")
     plot = topology_api.plot_barcode(barcode)
     utils.compare_values(matplotlib.figure.Figure, type(plot), "Wrong result type")
 
 
 def test_barcode_evaluate_all_metrics():
-    N, dim, data = utils.create_testing_data()
+    data = utils.create_testing_data()
     barcode = topology_api.get_data_barcode(data, "standard", "3")
     result = topology_api.evaluate_barcode(barcode)
     utils.compare_values(dict, type(result), "Wrong result type")
@@ -166,7 +166,7 @@ def test_barcode_evaluate_all_metrics():
 
 
 def test_barcode_evaluate_one_metric():
-    N, dim, data = utils.create_testing_data()
+    data = utils.create_testing_data()
     barcode = topology_api.get_data_barcode(data, "standard", "3")
     result = topology_api.evaluate_barcode(barcode, metric_name="mean_length")
     utils.compare_values(float, type(result), "Wrong result type")
