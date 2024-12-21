@@ -3,18 +3,29 @@ from typing import Optional
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+import torch.nn.functional as functional
 from torch.distributions import Beta
 
 
 class ModuleBayesianWrapper(nn.Module):
+    """
+    A wrapper for neural network layers to apply Bayesian-style dropout or noise during training.
+
+    Args:
+        layer (nn.Module): The layer to wrap (e.g., nn.Linear, nn.Conv2d).
+        p (Optional[float]): Dropout probability for simple dropout. Mutually exclusive with `a`, `b`, and `sigma`.
+        a (Optional[float]): Alpha parameter for Beta distribution dropout. Used with `b`.
+        b (Optional[float]): Beta parameter for Beta distribution dropout. Used with `a`.
+        sigma (Optional[float]): Standard deviation for Gaussian noise. Mutually exclusive with `p`, `a`, and `b`.
+    """
+
     def __init__(
-        self,
-        layer: nn.Module,
-        p: Optional[float] = None,
-        a: Optional[float] = None,
-        b: Optional[float] = None,
-        sigma: Optional[float] = None,
+            self,
+            layer: nn.Module,
+            p: Optional[float] = None,
+            a: Optional[float] = None,
+            b: Optional[float] = None,
+            sigma: Optional[float] = None,
     ):
         super(ModuleBayesianWrapper, self).__init__()
 
@@ -36,6 +47,16 @@ class ModuleBayesianWrapper(nn.Module):
             self.p, self.a, self.b, self.sigma = p, a, b, sigma
 
     def augment_weights(self, weights, bias):
+        """
+        Apply the specified noise or dropout to the weights and bias.
+
+        Args:
+            weights (torch.Tensor): The weights of the layer.
+            bias (torch.Tensor): The bias of the layer (can be None).
+
+        Returns:
+            Tuple[torch.Tensor, torch.Tensor]: The augmented weights and bias.
+        """
 
         # Check if dropout is chosen
         if (self.p is not None) or (self.a is not None and self.b is not None):
@@ -45,10 +66,10 @@ class ModuleBayesianWrapper(nn.Module):
             else:
                 p = Beta(torch.tensor(self.a), torch.tensor(self.b)).sample()
 
-            weights = F.dropout(weights, p, training=True)
+            weights = functional.dropout(weights, p, training=True)
             if bias is not None:
                 # In layers we sometimes have the ability to set bias to None
-                bias = F.dropout(bias, p, training=True)
+                bias = functional.dropout(bias, p, training=True)
 
         else:
             # If gauss is chosen, then apply it
@@ -60,11 +81,20 @@ class ModuleBayesianWrapper(nn.Module):
         return weights, bias
 
     def forward(self, x):
+        """
+        Forward pass through the layer with augmented weights.
+
+        Args:
+            x (torch.Tensor): Input tensor.
+
+        Returns:
+            torch.Tensor: Output tensor.
+        """
 
         weight, bias = self.augment_weights(self.layer.weight, self.layer.bias)
 
         if isinstance(self.layer, nn.Linear):
-            return F.linear(x, weight, bias)
+            return functional.linear(x, weight, bias)
         elif type(self.layer) in [nn.Conv1d, nn.Conv2d, nn.Conv3d]:
             return self.layer._conv_forward(x, weight, bias)
         else:
@@ -72,6 +102,18 @@ class ModuleBayesianWrapper(nn.Module):
 
 
 def replace_modules_with_wrapper(model, wrapper_module, params):
+    """
+    Recursively replaces layers in a model with a Bayesian wrapper.
+
+    Args:
+        model (nn.Module): The model containing layers to replace.
+        wrapper_module (type): The wrapper class.
+        params (dict): Parameters for the wrapper.
+
+    Returns:
+        nn.Module: The model with wrapped layers.
+    """
+
     if type(model) in [nn.Linear, nn.Conv1d, nn.Conv2d, nn.Conv3d]:
         return wrapper_module(model, **params)
 
@@ -88,12 +130,26 @@ def replace_modules_with_wrapper(model, wrapper_module, params):
 
 
 class NetworkBayes(nn.Module):
-    def __init__(
-        self,
-        model: nn.Module,
-        dropout_p: float,
-    ):
+    """
+    Bayesian network with standard dropout.
 
+    Args:
+        model (nn.Module): The base model.
+        dropout_p (float): Dropout probability.
+    """
+
+    def __init__(
+            self,
+            model: nn.Module,
+            dropout_p: float,
+    ):
+        """
+        Initialize the NetworkBayes with standard dropout.
+
+        Args:
+            model (nn.Module): The base model to wrap with Bayesian dropout.
+            dropout_p (float): Dropout probability for the Bayesian wrapper.
+        """
         super(NetworkBayes, self).__init__()
         self.model = copy.deepcopy(model)
         self.model = replace_modules_with_wrapper(
@@ -103,11 +159,20 @@ class NetworkBayes(nn.Module):
         )
 
     def mean_forward(
-        self,
-        data: torch.Tensor,
-        n_iter: int,
+            self,
+            data: torch.Tensor,
+            n_iter: int,
     ):
+        """
+        Perform forward passes to estimate the mean and standard deviation of outputs.
 
+        Args:
+            data (torch.Tensor): Input tensor.
+            n_iter (int): Number of stochastic forward passes.
+
+        Returns:
+            torch.Tensor: A tensor containing the mean (dim=0) and standard deviation (dim=1) of outputs.
+        """
         results = []
         for _ in range(n_iter):
             results.append(self.model.forward(data))
@@ -125,13 +190,29 @@ class NetworkBayes(nn.Module):
 
 # calculate mean and std after applying bayesian with beta distribution
 class NetworkBayesBeta(nn.Module):
-    def __init__(
-        self,
-        model: torch.nn.Module,
-        alpha: float,
-        beta: float,
-    ):
+    """
+    Bayesian network with Beta distribution dropout.
 
+    Args:
+        model (nn.Module): The base model.
+        alpha (float): Alpha parameter for the Beta distribution.
+        beta (float): Beta parameter for the Beta distribution.
+    """
+
+    def __init__(
+            self,
+            model: torch.nn.Module,
+            alpha: float,
+            beta: float,
+    ):
+        """
+        Initialize the NetworkBayesBeta with Beta distribution dropout.
+
+        Args:
+            model (nn.Module): The base model to wrap with Bayesian Beta dropout.
+            alpha (float): Alpha parameter of the Beta distribution.
+            beta (float): Beta parameter of the Beta distribution.
+        """
         super(NetworkBayesBeta, self).__init__()
         self.model = copy.deepcopy(model)
         self.model = replace_modules_with_wrapper(
@@ -141,11 +222,20 @@ class NetworkBayesBeta(nn.Module):
         )
 
     def mean_forward(
-        self,
-        data: torch.Tensor,
-        n_iter: int,
+            self,
+            data: torch.Tensor,
+            n_iter: int,
     ):
+        """
+        Perform forward passes to estimate the mean and standard deviation of outputs.
 
+        Args:
+            data (torch.Tensor): Input tensor.
+            n_iter (int): Number of stochastic forward passes.
+
+        Returns:
+            torch.Tensor: A tensor containing the mean (dim=0) and standard deviation (dim=1) of outputs.
+        """
         results = []
         for _ in range(n_iter):
             results.append(self.model.forward(data))
@@ -163,12 +253,26 @@ class NetworkBayesBeta(nn.Module):
 
 
 class NetworkBayesGauss(nn.Module):
-    def __init__(
-        self,
-        model: torch.nn.Module,
-        sigma: float,
-    ):
+    """
+    Bayesian network with Gaussian noise.
 
+    Args:
+        model (nn.Module): The base model.
+        sigma (float): Standard deviation of the Gaussian noise.
+    """
+
+    def __init__(
+            self,
+            model: torch.nn.Module,
+            sigma: float,
+    ):
+        """
+        Initialize the NetworkBayesGauss with Gaussian noise.
+
+        Args:
+            model (nn.Module): The base model to wrap with Bayesian Gaussian noise.
+            sigma (float): Standard deviation of the Gaussian noise to apply.
+        """
         super(NetworkBayesGauss, self).__init__()
         self.model = copy.deepcopy(model)
         self.model = replace_modules_with_wrapper(
@@ -178,11 +282,20 @@ class NetworkBayesGauss(nn.Module):
         )
 
     def mean_forward(
-        self,
-        data: torch.Tensor,
-        n_iter: int,
+            self,
+            data: torch.Tensor,
+            n_iter: int,
     ):
+        """
+        Perform forward passes to estimate the mean and standard deviation of outputs.
 
+        Args:
+            data (torch.Tensor): Input tensor.
+            n_iter (int): Number of stochastic forward passes.
+
+        Returns:
+            torch.Tensor: A tensor containing the mean (dim=0) and standard deviation (dim=1) of outputs.
+        """
         results = []
         for _ in range(n_iter):
             results.append(self.model.forward(data))
@@ -200,13 +313,28 @@ class NetworkBayesGauss(nn.Module):
 
 
 def create_dropout_bayesian_wrapper(
-    model: torch.nn.Module,
-    mode: Optional[str] = "basic",
-    p: Optional[float] = None,
-    a: Optional[float] = None,
-    b: Optional[float] = None,
-    sigma: Optional[float] = None,
+        model: torch.nn.Module,
+        mode: Optional[str] = "basic",
+        p: Optional[float] = None,
+        a: Optional[float] = None,
+        b: Optional[float] = None,
+        sigma: Optional[float] = None,
 ) -> torch.nn.Module:
+    """
+    Creates a Bayesian network with the specified dropout mode.
+
+    Args:
+        model (nn.Module): The base model.
+        mode (str): The dropout mode ("basic", "beta", "gauss").
+        p (Optional[float]): Dropout probability for "basic" mode.
+        a (Optional[float]): Alpha parameter for "beta" mode.
+        b (Optional[float]): Beta parameter for "beta" mode.
+        sigma (Optional[float]): Standard deviation for "gauss" mode.
+
+    Returns:
+        nn.Module: The Bayesian network.
+    """
+
     if mode == "basic":
         net = NetworkBayes(model, p)
 
@@ -215,5 +343,8 @@ def create_dropout_bayesian_wrapper(
 
     elif mode == 'gauss':
         net = NetworkBayesGauss(model, sigma)
+
+    else:
+        raise ValueError("Mode should be one of ('basic', 'beta', 'gauss').")
 
     return net
