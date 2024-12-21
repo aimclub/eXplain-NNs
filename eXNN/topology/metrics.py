@@ -1,13 +1,15 @@
 import heapq
+from typing import Dict
+
 import numpy as np
 
 
 def _get_available_metrics():
     """
-    Returns a dictionary of available metric names and their corresponding functions.
+    Returns a dictionary mapping metric names to their respective computation functions.
 
     Returns:
-        dict: Mapping of metric names to functions.
+        Dict[str, callable]: A dictionary of metric computation functions.
     """
     return {
         # Absolute length-based metrics
@@ -32,16 +34,16 @@ def _get_available_metrics():
     }
 
 
-def compute_metric(barcode, metric_name=None):
+def compute_metric(barcode: Dict[str, np.ndarray], metric_name: str = None):
     """
-    Compute the specified metric or all available metrics for a given barcode.
+    Computes specified or all metrics for a given barcode.
 
     Args:
-        barcode (dict): The barcode data containing persistent homology intervals.
-        metric_name (str, optional): The name of the metric to compute. Defaults to None.
+        barcode (Dict[str, np.ndarray]): The barcode to compute metrics for.
+        metric_name (str, optional): The specific metric name to compute. If None, all metrics are computed.
 
     Returns:
-        dict or float: A dictionary of all metrics if metric_name is None, otherwise the value of the specified metric.
+        float or Dict[str, float]: The computed metric(s).
     """
     metrics = _get_available_metrics()
     if metric_name is None:
@@ -49,256 +51,257 @@ def compute_metric(barcode, metric_name=None):
     return metrics[metric_name](barcode)
 
 
-def _get_lengths(barcode):
+def _get_lengths(barcode: Dict[str, np.ndarray]):
     """
-    Compute lengths of intervals in the H0 component of the barcode.
+    Extracts lengths of intervals from a barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        list: A list of interval lengths.
+        List[float]: A list of interval lengths.
     """
     diag = barcode["H0"]
     return [d[1] - d[0] for d in diag]
 
 
-def _compute_longest_interval_metric(barcode):
+def _compute_longest_interval_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the length of the longest interval in the barcode.
+    Computes the maximum interval length in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The length of the longest interval.
+        float: The maximum interval length.
     """
     lengths = _get_lengths(barcode)
-    return np.max(lengths).item()
+    return float(np.max(lengths))
 
 
-def _compute_length_mean_metric(barcode):
+def _compute_length_mean_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the mean length of intervals in the barcode.
+    Computes the mean interval length in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The mean length of intervals.
+        float: The mean interval length.
     """
     lengths = _get_lengths(barcode)
-    return np.mean(lengths).item()
+    return float(np.mean(lengths))
 
 
-def _compute_length_median_metric(barcode):
+def _compute_length_median_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the median length of intervals in the barcode.
+    Computes the median interval length in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The median length of intervals.
+        float: The median interval length.
     """
     lengths = _get_lengths(barcode)
-    return np.median(lengths).item()
+    return float(np.median(lengths))
 
 
-def _compute_length_stdev_metric(barcode):
+def _compute_length_stdev_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the standard deviation of interval lengths in the barcode.
+    Computes the standard deviation of interval lengths in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
         float: The standard deviation of interval lengths.
     """
     lengths = _get_lengths(barcode)
-    return np.std(lengths).item()
+    return float(np.std(lengths))
 
 
-def _compute_length_sum_metric(barcode):
+def _compute_length_sum_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the sum of interval lengths in the barcode.
+    Computes the sum of all interval lengths in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The sum of interval lengths.
+        float: The sum of all interval lengths.
     """
     lengths = _get_lengths(barcode)
-    return np.sum(lengths).item()
+    return float(np.sum(lengths))
 
 
-def _compute_two_to_one_ratio_metric(barcode):
+def _compute_two_to_one_ratio_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the ratio of the second longest to the longest interval in the barcode.
+    Computes the ratio of the second largest to the largest interval length.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The 2-to-1 ratio of interval lengths.
+        float: The ratio of the second largest to the largest interval length.
     """
     lengths = _get_lengths(barcode)
     value = heapq.nlargest(2, lengths)[1] / lengths[0]
-    return value
+    return float(value)
 
 
-def _compute_three_to_one_ratio_metric(barcode):
+def _compute_three_to_one_ratio_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the ratio of the third longest to the longest interval in the barcode.
+    Computes the ratio of the third largest to the largest interval length.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The 3-to-1 ratio of interval lengths.
+        float: The ratio of the third largest to the largest interval length.
     """
     lengths = _get_lengths(barcode)
     value = heapq.nlargest(3, lengths)[2] / lengths[0]
-    return value
+    return float(value)
 
 
-def _get_entropy(values, normalize):
+def _get_entropy(values: np.ndarray, normalize: bool) -> float:
     """
-    Compute the entropy of a set of values.
+    Computes the entropy of a given distribution.
 
     Args:
-        values (list): The values for which to compute entropy.
+        values (np.ndarray): The values to compute entropy for.
         normalize (bool): Whether to normalize the entropy.
 
     Returns:
         float: The computed entropy.
     """
     values_sum = np.sum(values)
-    entropy = -np.sum(np.divide(values, values_sum) * np.log(np.divide(values, values_sum)))
+    entropy = (-1) * np.sum(np.divide(values, values_sum) * np.log(np.divide(values, values_sum)))
     if normalize:
-        entropy /= np.log(values_sum)
-    return entropy
+        entropy = entropy / np.log(values_sum)
+    return float(entropy)
 
 
-def _compute_entropy_metric(barcode):
+def _compute_entropy_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the persistent entropy of the barcode.
+    Computes the persistent entropy of intervals in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
         float: The persistent entropy.
     """
-    return _get_entropy(_get_lengths(barcode), normalize=False).item()
+    return _get_entropy(_get_lengths(barcode), normalize=False)
 
 
-def _compute_normed_entropy_metric(barcode):
+def _compute_normed_entropy_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the normalized persistent entropy of the barcode.
+    Computes the normalized persistent entropy of intervals in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
         float: The normalized persistent entropy.
     """
-    return _get_entropy(_get_lengths(barcode), normalize=True).item()
+    return _get_entropy(_get_lengths(barcode), normalize=True)
 
 
-def _get_births(barcode):
+def _get_births(barcode: Dict[str, np.ndarray]) -> np.ndarray:
     """
-    Extract the birth times from the barcode.
+    Extracts the birth times from the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        np.ndarray: The birth times.
+        np.ndarray: An array of birth times.
     """
     diag = barcode["H0"]
     return np.array([x[0] for x in diag])
 
 
-def _get_deaths(barcode):
+def _get_deaths(barcode: Dict[str, np.ndarray]) -> np.ndarray:
     """
-    Extract the death times from the barcode.
+    Extracts the death times from the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        np.ndarray: The death times.
+        np.ndarray: An array of death times.
     """
     diag = barcode["H0"]
     return np.array([x[1] for x in diag])
 
 
-def _compute_snr_metric(barcode):
+def _compute_snr_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the signal-to-noise ratio (SNR) of the barcode.
+    Computes the signal-to-noise ratio (SNR) for the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The SNR value.
+        float: The computed SNR.
     """
     births = _get_births(barcode)
     deaths = _get_deaths(barcode)
     signal = np.mean(deaths - births)
     noise = np.std(births)
-    return (signal / noise).item()
+    snr = signal / noise
+    return float(snr)
 
 
-def _compute_births_mean_metric(barcode):
+def _compute_births_mean_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the mean of birth times in the barcode.
+    Computes the mean of birth times in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The mean birth time.
+        float: The mean of birth times.
     """
-    return np.mean(_get_births(barcode)).item()
+    return float(np.mean(_get_births(barcode)))
 
 
-def _compute_births_stdev_metric(barcode):
+def _compute_births_stdev_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the standard deviation of birth times in the barcode.
+    Computes the standard deviation of birth times in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
         float: The standard deviation of birth times.
     """
-    return np.std(_get_births(barcode)).item()
+    return float(np.std(_get_births(barcode)))
 
 
-def _compute_deaths_mean_metric(barcode):
+def _compute_deaths_mean_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the mean of death times in the barcode.
+    Computes the mean of death times in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
-        float: The mean death time.
+        float: The mean of death times.
     """
-    return np.mean(_get_deaths(barcode)).item()
+    return float(np.mean(_get_deaths(barcode)))
 
 
-def _compute_deaths_stdev_metric(barcode):
+def _compute_deaths_stdev_metric(barcode: Dict[str, np.ndarray]) -> float:
     """
-    Compute the standard deviation of death times in the barcode.
+    Computes the standard deviation of death times in the barcode.
 
     Args:
-        barcode (dict): The barcode data.
+        barcode (Dict[str, np.ndarray]): The barcode to process.
 
     Returns:
         float: The standard deviation of death times.
     """
-    return np.std(_get_deaths(barcode)).item()
+    return float(np.std(_get_deaths(barcode)))
