@@ -21,27 +21,20 @@ def create_testing_data():
     return N, dim, data
 
 
-def create_testing_model(num_classes=10):
-    return nn.Sequential(
-        OrderedDict(
-            [
-                ("first_layer", nn.Linear(256, 128)),
-                ("second_layer", nn.Linear(128, 64)),
-                ("third_layer", nn.Linear(64, num_classes)),
-            ],
-        ),
-    )
-
-
-class ExtractTensor(nn.Module):
-    def forward(self, x):
-        tensor, _ = x
-        x = x.to(torch.float32)
-        return tensor[:, :]
-
-
-def create_testing_model_lstm(num_classes=10):
-    return nn.Sequential(
+def create_testing_model(architecture='fcn', num_classes=10):
+    architecture = architecture.lower()
+    if architecture == 'fcn':
+        return nn.Sequential(
+            OrderedDict(
+                [
+                    ("first_layer", nn.Linear(256, 128)),
+                    ("second_layer", nn.Linear(128, 64)),
+                    ("third_layer", nn.Linear(64, num_classes)),
+                ],
+            ),
+        )
+    elif architecture == 'rnn':
+        return nn.Sequential(
         OrderedDict(
             [
                 ('first_layer', nn.LSTM(256, 128, 1, batch_first=True)),
@@ -51,3 +44,12 @@ def create_testing_model_lstm(num_classes=10):
             ],
         ),
     )
+    else:
+        raise Exception(f'Unsupported architecture type: {architecture}')
+
+
+class ExtractTensor(nn.Module):
+    def forward(self, x):
+        tensor, _ = x
+        x = x.to(torch.float32)
+        return tensor[:, :]
