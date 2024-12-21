@@ -94,16 +94,16 @@ def test_embed_visualization():
         )
 
 
-def _test_bayes_prediction(mode: str):
+def _test_bayes_prediction(mode: str, architecture='fcn'):
     params = {
         "basic": dict(mode="basic", p=0.5),
         "beta": dict(mode="beta", a=0.9, b=0.2),
         "gauss": dict(sigma=1e-2),
     }
 
-    data = utils.create_testing_data()
+    data = utils.create_testing_data(architecture=architecture)
     num_classes = 17
-    model = utils.create_testing_model(num_classes=num_classes)
+    model = utils.create_testing_model(architecture=architecture, num_classes=num_classes)
     n_iter = 7
     if mode != 'gauss':
         res = bayes_api.DropoutBayesianWrapper(model, **(params[mode])).predict(data, n_iter=n_iter)
@@ -128,6 +128,10 @@ def test_beta_bayes_wrapper():
 
 def test_gauss_bayes_wrapper():
     _test_bayes_prediction("gauss")
+
+
+def test_bayes_wrapper_cnn():
+    _test_bayes_prediction("basic", architecture='cnn')
 
 
 def test_data_barcode():
