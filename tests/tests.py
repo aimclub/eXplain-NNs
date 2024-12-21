@@ -156,6 +156,22 @@ def test_nn_barcodes():
         )
 
 
+def test_nn_barcodes_cnn():
+    data = utils.create_testing_data(architecture='cnn')
+    model = utils.create_testing_model(architecture='cnn')
+    layers = ["second_layer", "flatten"]
+    res = topology_api.get_nn_barcodes(model, data, layers, "standard", "3")
+    utils.compare_values(dict, type(res), "Wrong result type")
+    utils.compare_values(2, len(res), "Wrong dictionary length")
+    utils.compare_values(set(layers), set(res.keys()), "Wrong dictionary keys")
+    for layer, barcode in res.items():
+        utils.compare_values(
+            dict,
+            type(barcode),
+            f"Wrong result type for key {layer}",
+        )
+
+
 def test_barcode_plot():
     data = utils.create_testing_data()
     barcode = topology_api.get_data_barcode(data, "standard", "3")
