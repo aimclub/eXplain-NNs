@@ -50,15 +50,15 @@ def create_testing_model(architecture='fcn', num_classes=10):
         )
     elif architecture == 'rnn':
         return nn.Sequential(
-        OrderedDict(
-            [
-                ('first_layer', nn.LSTM(256, 128, 1, batch_first=True)),
-                ('extract', ExtractTensor()),
-                ('second_layer', nn.Linear(128, 64)),
-                ('third_layer', nn.Linear(64, num_classes)),
-            ],
-        ),
-    )
+            OrderedDict(
+                [
+                    ('first_layer', nn.LSTM(256, 128, 1, batch_first=True)),
+                    ('extract', ExtractTensor()),
+                    ('second_layer', nn.Linear(128, 64)),
+                    ('third_layer', nn.Linear(64, num_classes)),
+                ],
+            ),
+        )
     else:
         raise Exception(f'Unsupported architecture type: {architecture}')
 

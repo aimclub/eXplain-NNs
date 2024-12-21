@@ -51,6 +51,7 @@ def test_visualization_fcn():
             f"Wrong value type for key {key}",
         )
 
+
 def test_visualization_cnn():
     data = utils.create_testing_data(architecture='cnn')
     model = utils.create_testing_model(architecture='cnn')
@@ -114,8 +115,9 @@ def _test_bayes_prediction(mode: str, architecture='fcn'):
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(2, len(res), "Wrong dictionary length")
     utils.compare_values(set(["mean", "std"]), set(res.keys()), "Wrong dictionary keys")
-    utils.compare_values(torch.Size([len(data), num_classes]), res["mean"].shape, "Wrong mean shape")
-    utils.compare_values(torch.Size([len(data), num_classes]), res["std"].shape, "Wrong mean std")
+    N = len(data)
+    utils.compare_values(torch.Size([N, num_classes]), res["mean"].shape, "Wrong mean shape")
+    utils.compare_values(torch.Size([N, num_classes]), res["std"].shape, "Wrong mean std")
 
 
 def test_basic_bayes_wrapper():
