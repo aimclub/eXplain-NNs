@@ -108,10 +108,11 @@ Here are colabs demonstrating how to work with different modules of our API on s
 | [![visualization](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1LJVdWTv-wcASSMX4is_E15TR7XJsT7W3?usp=sharing)| visualization |
 
 ### Use Cases
-This block provides examples how eXplain-NNs can be used to solve different use cases in industrial tasks. For demonstration purposed 3 tasks are used:
+This block provides examples how eXplain-NNs can be used to solve different use cases in industrial tasks. For demonstration purposed 4 tasks are used:
 * [satellite] landscape classification from satellite imagery
 * [electronics] electronic components and devices classification
 * [ECG] ECG diagnostics
+* [semiconductors] failure detection in wafer mapping
 
 | Colab Link | Task | Use Case |
 | ------------- | ------------- | ------------- |
@@ -119,6 +120,7 @@ This block provides examples how eXplain-NNs can be used to solve different use 
 | [![adv](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1n50WUu2ZKZ6nrT9DuFD3q87m3yZvxkwm?usp=sharing) | satellite | Detecting adversarial examples |
 | [![generalize](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mG-VrP7J7OoCvIQDl7n5YWEIdyfFg_0I?usp=sharing) | electronics | Estimating generalization of a NN |
 | [![RNN_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1aAtqxQLcOsSJJumfsmS9HGLgHrOFHlfk?usp=sharing) | ECG | Visualization of data manifold evolution from layer to layer |
+| [![wafer](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1nGpnO1wC7jp3fW4rjVfucvKyz_FA8hYp?usp=sharing) | semiconductors | Failure detection in wafer mapping |
 
 ## Contribution Guide
 The contribution guide is available in the [repository](/docs/contribution.md).

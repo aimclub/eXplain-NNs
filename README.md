@@ -109,10 +109,11 @@
 | [![visualization](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1LJVdWTv-wcASSMX4is_E15TR7XJsT7W3?usp=sharing)| visualization |
 
 ### Сценарии использования
-В этом блоке представлены примеры использования eXplain-NN для решения различных вариантов использования в промышленных задачах. Для демонстрационных целей используются 3 задачи:
+В этом блоке представлены примеры использования eXplain-NN для решения различных вариантов использования в промышленных задачах. Для демонстрационных целей используются 4 задачи:
 * [спутник] классификация ландшафтов по спутниковым снимкам.
 * [электроника] классификация электронных компонентов и устройств
 * [ЭКГ] диагностика ЭКГ
+* [полупроводники] детекция дефектов при тестировании полупроводниковых пластин
 
 | Colab Link | Task | Use Case |
 | ------------- | ------------- | ------------- |
@@ -120,6 +121,7 @@
 | [![adv](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1n50WUu2ZKZ6nrT9DuFD3q87m3yZvxkwm?usp=sharing) | спутник | Детекция adversarial данных |
 | [![generalize](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mG-VrP7J7OoCvIQDl7n5YWEIdyfFg_0I?usp=sharing) | электроника | Оценка обобщающей способности нейронной сети |
 | [![RNN_viz](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1aAtqxQLcOsSJJumfsmS9HGLgHrOFHlfk?usp=sharing) | ЭКГ | Визуализация изменения многообразия данных от слоя к слою |
+| [![wafer](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1nGpnO1wC7jp3fW4rjVfucvKyz_FA8hYp?usp=sharing) | полупроводники | Детекция дефектов при тестировании полупроводниковых пластин |
 
 ## Как помочь проекту
 [Инструкции](/docs/contribution.md).
