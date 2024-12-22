@@ -58,3 +58,12 @@ def test_gauss_bayes_wrapper():
     """
     _test_bayes_prediction("gauss")
 
+
+def test_all_bayes_wrappers():
+    """
+    Test all Bayesian wrappers (basic, beta, and gauss) with a single general test.
+    """
+    modes = ["basic", "beta", "gauss"]
+
+    for mode in modes:
+        _test_bayes_prediction(mode)

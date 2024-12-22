@@ -40,3 +40,16 @@ def test_reduce_dim_pca():
     """
     _check_reduce_dim("pca")
 
+
+def test_all_reduce_dim_methods():
+    """
+    Test dimensionality reduction using all available methods (e.g., UMAP, PCA).
+
+    Verifies:
+        - Dimensionality reduction works for each method.
+        - Output is of type numpy.ndarray and shape (n_samples, 2).
+    """
+    modes = ["umap", "pca"]
+
+    for mode in modes:
+        _check_reduce_dim(mode)

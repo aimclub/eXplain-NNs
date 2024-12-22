@@ -55,3 +55,29 @@ def test_barcode_plot():
     plot = topology_api.plot_barcode(barcode)
     utils.compare_values(matplotlib.figure.Figure, type(plot), "Wrong result type")
 
+
+def test_all_barcodes():
+    """
+    Test all barcode-related functions (data barcode, NN barcodes, and barcode plot) together.
+
+    Verifies:
+        - Data barcode is generated correctly.
+        - Neural network barcodes are generated correctly for specified layers.
+        - Barcode plot is generated correctly.
+    """
+    # Test data barcode
+    n, dim, data = utils.create_testing_data()
+    res = topology_api.get_data_barcode(data, "standard", "3")
+    utils.compare_values(dict, type(res), "Wrong result type for data barcode")
+
+    # Test NN barcodes
+    model = utils.create_testing_model()
+    layers = ["second_layer", "third_layer"]
+    nn_barcodes = topology_api.get_nn_barcodes(model, data, layers, "standard", "3")
+    utils.compare_values(dict, type(nn_barcodes), "Wrong result type for NN barcodes")
+    utils.compare_values(2, len(nn_barcodes), "Wrong dictionary length for NN barcodes")
+    utils.compare_values(set(layers), set(nn_barcodes.keys()), "Wrong dictionary keys for NN barcodes")
+
+    # Test barcode plot
+    barcode_plot = topology_api.plot_barcode(res)
+    utils.compare_values(matplotlib.figure.Figure, type(barcode_plot), "Wrong result type for barcode plot")
