@@ -7,7 +7,7 @@
 
 [![Documentation](https://github.com/aimclub/eXplain-NNs/actions/workflows/pages/pages-build-deployment/badge.svg)](https://med-ai-lab.github.io/eXplain-NNs-documentation/)
 [![license](https://img.shields.io/github/license/aimclub/eXplain-NNs)](https://github.com/aimclub/eXplain-NNs/blob/main/LICENSE)
-[![Rus](https://img.shields.io/badge/lang-ru-yellow.svg)](/README.md)
+[![Rus](https://img.shields.io/badge/lang-ru-yellow.svg)](/README_ru)
 [![Mirror](https://img.shields.io/badge/mirror-GitLab-orange)](https://gitlab.actcognitive.org/itmo-sai-code/eXplain-NNs)
 
 # eXplain-NNs
