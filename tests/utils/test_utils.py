@@ -29,9 +29,8 @@ def compare_values(expected, got, message_header=None):
     Raises:
         AssertionError: If the values do not match, an error with the message header is raised.
     """
-    assert (
-            expected == got
-    ), f"{_form_message_header(message_header)}: expected {expected}, got {got}"
+    assert (expected == got), \
+        f"{_form_message_header(message_header)}: expected {expected}, got {got}"
 
 
 def create_testing_data():

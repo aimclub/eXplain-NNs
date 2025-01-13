@@ -51,7 +51,8 @@ def test_embed_visualization():
     model = utils.create_testing_model_lstm()
     layers = ["second_layer", "third_layer"]
 
-    res = viz_api.visualize_recurrent_layer_manifolds(model, "umap", data, layers=layers, labels=labels)
+    res = viz_api.visualize_recurrent_layer_manifolds(model, "umap", data, layers=layers,
+                                                      labels=labels)
 
     utils.compare_values(dict, type(res), "Wrong result type")
     utils.compare_values(2, len(res), "Wrong dictionary length")

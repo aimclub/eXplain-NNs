@@ -13,10 +13,12 @@ class ModuleBayesianWrapper(nn.Module):
 
     Args:
         layer (nn.Module): The layer to wrap (e.g., nn.Linear, nn.Conv2d).
-        p (Optional[float]): Dropout probability for simple dropout. Mutually exclusive with `a`, `b`, and `sigma`.
+        p (Optional[float]): Dropout probability for simple dropout.
+        Mutually exclusive with `a`, `b`, and `sigma`.
         a (Optional[float]): Alpha parameter for Beta distribution dropout. Used with `b`.
         b (Optional[float]): Beta parameter for Beta distribution dropout. Used with `a`.
-        sigma (Optional[float]): Standard deviation for Gaussian noise. Mutually exclusive with `p`, `a`, and `b`.
+        sigma (Optional[float]): Standard deviation for Gaussian noise.
+        Mutually exclusive with `p`, `a`, and `b`.
     """
 
     def __init__(
@@ -171,7 +173,8 @@ class NetworkBayes(nn.Module):
             n_iter (int): Number of stochastic forward passes.
 
         Returns:
-            torch.Tensor: A tensor containing the mean (dim=0) and standard deviation (dim=1) of outputs.
+            torch.Tensor: A tensor containing the mean (dim=0) and
+            standard deviation (dim=1) of outputs.
         """
         results = []
         for _ in range(n_iter):
@@ -234,7 +237,8 @@ class NetworkBayesBeta(nn.Module):
             n_iter (int): Number of stochastic forward passes.
 
         Returns:
-            torch.Tensor: A tensor containing the mean (dim=0) and standard deviation (dim=1) of outputs.
+            torch.Tensor: A tensor containing the mean (dim=0) and
+            standard deviation (dim=1) of outputs.
         """
         results = []
         for _ in range(n_iter):
@@ -294,7 +298,8 @@ class NetworkBayesGauss(nn.Module):
             n_iter (int): Number of stochastic forward passes.
 
         Returns:
-            torch.Tensor: A tensor containing the mean (dim=0) and standard deviation (dim=1) of outputs.
+            torch.Tensor: A tensor containing the mean (dim=0) and
+            standard deviation (dim=1) of outputs.
         """
         results = []
         for _ in range(n_iter):

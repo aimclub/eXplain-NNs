@@ -40,7 +40,8 @@ def compute_metric(barcode: Dict[str, np.ndarray], metric_name: str = None):
 
     Args:
         barcode (Dict[str, np.ndarray]): The barcode to compute metrics for.
-        metric_name (str, optional): The specific metric name to compute. If None, all metrics are computed.
+        metric_name (str, optional): The specific metric name to compute.
+        If None, all metrics are computed.
 
     Returns:
         float or Dict[str, float]: The computed metric(s).

@@ -44,7 +44,8 @@ def _diagram_to_barcode(plot) -> Dict[str, np.ndarray]:
         plot: The plot object containing persistence diagram data.
 
     Returns:
-        Dict[str, np.ndarray]: A dictionary where keys are homology types, and values are arrays of intervals.
+        Dict[str, np.ndarray]: A dictionary where keys are homology types, and
+        values are arrays of intervals.
     """
     data = plot["data"]
     homologies = {}
@@ -88,7 +89,8 @@ def plot_barcode(barcode: Dict[str, np.ndarray]) -> plt.Figure:
     return fig
 
 
-def compute_data_barcode(data: torch.Tensor, hom_type: str, coefficient_type: str) -> Dict[str, np.ndarray]:
+def compute_data_barcode(data: torch.Tensor, hom_type: str, coefficient_type: str) -> Dict[
+    str, np.ndarray]:
     """
     Computes a barcode for the given data using persistent homology.
 
