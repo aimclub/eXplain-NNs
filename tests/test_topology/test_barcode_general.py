@@ -73,11 +73,36 @@ def test_all_barcodes():
     # Test NN barcodes
     model = utils.create_testing_model()
     layers = ["second_layer", "third_layer"]
-    nn_barcodes = topology_api.get_nn_barcodes(model, data, layers, "standard", "3")
-    utils.compare_values(dict, type(nn_barcodes), "Wrong result type for NN barcodes")
-    utils.compare_values(2, len(nn_barcodes), "Wrong dictionary length for NN barcodes")
-    utils.compare_values(set(layers), set(nn_barcodes.keys()), "Wrong dictionary keys for NN barcodes")
+    nn_barcodes = topology_api.get_nn_barcodes(
+        model,
+        data,
+        layers,
+        "standard",
+        "3"
+    )
+
+    utils.compare_values(
+        dict,
+        type(nn_barcodes),
+        "Wrong result type for NN barcodes"
+    )
+
+    utils.compare_values(
+        2,
+        len(nn_barcodes),
+        "Wrong dictionary length for NN barcodes"
+    )
+
+    utils.compare_values(
+        set(layers),
+        set(nn_barcodes.keys()),
+        "Wrong dictionary keys for NN barcodes"
+    )
 
     # Test barcode plot
     barcode_plot = topology_api.plot_barcode(res)
-    utils.compare_values(matplotlib.figure.Figure, type(barcode_plot), "Wrong result type for barcode plot")
+    utils.compare_values(
+        matplotlib.figure.Figure,
+        type(barcode_plot),
+        "Wrong result type for barcode plot"
+    )

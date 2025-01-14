@@ -89,8 +89,11 @@ def plot_barcode(barcode: Dict[str, np.ndarray]) -> plt.Figure:
     return fig
 
 
-def compute_data_barcode(data: torch.Tensor, hom_type: str, coefficient_type: str) -> Dict[
-    str, np.ndarray]:
+def compute_data_barcode(
+    data: torch.Tensor,
+    hom_type: str,
+    coefficient_type: str
+) -> Dict[str, np.ndarray]:
     """
     Computes a barcode for the given data using persistent homology.
 

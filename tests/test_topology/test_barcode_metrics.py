@@ -75,13 +75,24 @@ def test_barcode_evaluate_all_metrics_and_individual():
     ]
 
     # Check that the dictionary keys match the expected metric names
-    utils.compare_values(all_metric_names, sorted(result.keys()), "Wrong dictionary keys")
+    utils.compare_values(
+        all_metric_names,
+        sorted(result.keys()),
+        "Wrong dictionary keys"
+    )
 
     # Ensure all metric values are floats
     for name, value in result.items():
-        utils.compare_values(float, type(value), f"Wrong result type for metric {name}")
+        utils.compare_values(
+            float, type(value),
+            f"Wrong result type for metric {name}"
+        )
 
     # Test for evaluating individual metrics
     for metric_name in all_metric_names:
         individual_result = topology_api.evaluate_barcode(barcode, metric_name=metric_name)
-        utils.compare_values(float, type(individual_result), f"Wrong result type for individual metric {metric_name}")
+        utils.compare_values(
+            float,
+            type(individual_result),
+            f"Wrong result type for individual metric {metric_name}"
+        )
