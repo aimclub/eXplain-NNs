@@ -1,6 +1,5 @@
 from typing import Dict, Optional
 
-import torch
 import torch.optim
 
 from eXNN.bayes.wrapper import create_dropout_bayesian_wrapper
@@ -8,12 +7,12 @@ from eXNN.bayes.wrapper import create_dropout_bayesian_wrapper
 
 class DropoutBayesianWrapper:
     def __init__(
-        self,
-        model: torch.nn.Module,
-        mode: str,
-        p: Optional[float] = None,
-        a: Optional[float] = None,
-        b: Optional[float] = None,
+            self,
+            model: torch.nn.Module,
+            mode: str,
+            p: Optional[float] = None,
+            a: Optional[float] = None,
+            b: Optional[float] = None,
     ):
         """Class representing bayesian equivalent of a neural network.
 
@@ -49,9 +48,9 @@ class DropoutBayesianWrapper:
 
 class GaussianBayesianWrapper:
     def __init__(
-        self,
-        model: torch.nn.Module,
-        sigma: float,
+            self,
+            model: torch.nn.Module,
+            sigma: float,
     ):
         """Class representing bayesian equivalent of a neural network.
 
