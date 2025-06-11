@@ -85,3 +85,5 @@ flake8-builtins==2.1.0
 flake8-commas==2.1.0
 flake8-variables-names==0.0.5
 flake8-isort==6.0.0
+
+gudhi
